@@ -1,0 +1,13 @@
+// File: PY32F403xx.dbgconf
+// Version: 1.0.0
+
+// <<< Use Configuration Wizard in Context Menu >>>
+
+// <h> Debug MCU configuration register (DBGMCU_CR)
+//   <o.2>  DBG_STANDBY              <i> Debug Standby Mode
+//   <o.1>  DBG_STOP                 <i> Debug Stop Mode
+//   <o.0>  DBG_SLEEP                <i> Debug Sleep Mode
+// </h>
+DbgMCU_CR = 0x00000007;
+
+// <<< end of configuration section >>>
