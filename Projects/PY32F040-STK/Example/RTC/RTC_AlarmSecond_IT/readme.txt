@@ -1,0 +1,54 @@
+================================================================================
+                                样例使用说明
+                             Sample Description
+================================================================================
+功能描述：
+此样例演示RTC的秒中断和闹钟中断功能。每次秒中断，在中断函数中会打印字符“RTC_IT_SEC”
+并输出实时时间。
+
+Function descriptions:
+This sample demonstrates the RTC's second interrupt and alarm interrupt 
+functionality. Each time the second interrupt occurs, the interrupt function 
+prints the string "RTC_IT_SEC" and outputs the current RTC count time.
+================================================================================
+测试环境：
+测试用板：PY32F040_STK
+MDK版本： 5.28
+IAR版本： 9.20
+GCC 版本：GNU Arm Embedded Toolchain 10.3-2021.10
+
+Test environment:
+Test board: PY32F040_STK
+MDK Version: 5.28
+IAR Version: 9.20
+GCC Version: GNU Arm Embedded Toolchain 10.3-2021.10
+================================================================================
+使用步骤：
+1. 编译并下载程序到MCU。
+2. 使用USB转TTL模块将PC与STK板连接起来。STK板与USB转TTL模块的连线方式如下：
+   STK板        USB转TTL模块
+   PA2(TX) --> RX
+   PA3(RX) --> TX
+   GND      --> GND
+3. 在PC端打开串口调试助手，并正确连接到通讯COM口。
+4. 按下STK板的复位按键。串口调试助手将每秒钟接收到字符串"RTC_IT_SEC"和当前RTC计数时间。
+
+Example execution steps:
+1. Compile and download the program to the MCU.
+2. Connect the PC and the STK board using a USB to TTL module. The wiring 
+   between the STK board and the USB to TTL module is as follows:
+   STK board      USB to TTL module
+   PA2(TX)  -->   RX
+   PA3(RX)  -->   TX
+   GND      -->   GND
+3. Open a serial terminal on the PC and correctly connect to the corresponding 
+   COM port.
+4. Press the reset button on the STK board. The serial terminal will receive 
+   the string "RTC_IT_SEC" and the current RTC count time every second.
+================================================================================
+注意事项：
+打印字符需要通过串口调试助手在上位机上显示。
+
+Notes:
+The printed characters need to be displayed on the PC through a serial terminal.
+================================================================================

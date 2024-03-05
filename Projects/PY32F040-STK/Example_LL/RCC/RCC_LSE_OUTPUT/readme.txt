@@ -1,0 +1,41 @@
+================================================================================
+                                样例使用说明
+                             Sample Description
+================================================================================
+功能描述：
+此样例演示了时钟输出功能，可输出LSE波形。
+
+Function descriptions:
+This sample demonstrates the clock output feature that can output the LSE 
+waveform.
+================================================================================
+测试环境：
+测试用板：PY32F040_STK
+MDK版本： 5.28
+IAR版本： 9.20
+GCC 版本：GNU Arm Embedded Toolchain 10.3-2021.10
+
+Test environment:
+Test board: PY32F040_STK
+MDK Version: 5.28
+IAR Version: 9.20
+GCC Version: GNU Arm Embedded Toolchain 10.3-2021.10
+================================================================================
+使用步骤：
+1. 编译下载程序到MCU，并运行；
+2. 按下用户按键；
+3. 用示波器监测PA08引脚上的频率，观察是否和配置的LSE频率一致。
+
+Example execution steps:
+1. Compile and download the program to the MCU.
+2. Press the user button.
+3. Use an oscilloscope to monitor the frequency on pin PA08 and observe if it 
+   matches the configured LSE frequency.
+================================================================================
+注意事项：
+1. 样例中默认启动的系统时钟是HSI，只有按下用户按键后，系统时钟才会切换到LSE。
+
+Notes:
+1. The default system clock in the sample is HSI. The system clock will only 
+   switch to LSE when the user button is pressed.
+================================================================================

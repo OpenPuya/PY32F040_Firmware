@@ -1,0 +1,164 @@
+{
+  "name": "Project",
+  "type": "ARM",
+  "dependenceList": [],
+  "srcDirs": [
+    ".eide/deps"
+  ],
+  "virtualFolder": {
+    "name": "<virtual_root>",
+    "files": [],
+    "folders": [
+      {
+        "name": "BSP",
+        "files": [
+          {
+            "path": "../../../../../../Drivers/BSP/PY32F040xx_Start_Kit/py32f040xx_Start_Kit.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "Common",
+        "files": [
+          {
+            "path": "../Src/system_py32f040.c"
+          },
+          {
+            "path": "startup_py32f040xx.s"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "Doc",
+        "files": [
+          {
+            "path": "../readme.txt"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "PY32F040_HAL_Driver",
+        "files":[
+          {
+            "path":"../../../../../../Drivers/PY32F040_HAL_Driver/Src/py32f040_hal.c"
+          },
+          {                
+            "path":"../../../../../../drivers/PY32F040_HAL_Driver/src/py32f040_hal_rcc.c"
+          },
+          {                
+            "path":"../../../../../../drivers/PY32F040_HAL_Driver/src/py32f040_hal_rcc_ex.c"
+          },
+          {                
+            "path":"../../../../../../drivers/PY32F040_HAL_Driver/src/py32f040_hal_gpio.c"
+          },
+          {                
+            "path":"../../../../../../drivers/PY32F040_HAL_Driver/src/py32f040_hal_dma.c"
+          },
+          {                
+            "path":"../../../../../../drivers/PY32F040_HAL_Driver/src/py32f040_hal_pwr.c"
+          },
+          {                
+            "path":"../../../../../../drivers/PY32F040_HAL_Driver/src/py32f040_hal_uart.c"
+          },
+          {                
+            "path":"../../../../../../drivers/PY32F040_HAL_Driver/src/py32f040_hal_cortex.c"
+          },
+          {                
+            "path":"../../../../../../Drivers/PY32F040_HAL_Driver/Src/py32f040_hal_tim.c"
+          },
+          {                
+            "path":"../../../../../../Drivers/PY32F040_HAL_Driver/Src/py32f040_hal_tim_ex.c"
+          },
+          {                
+            "path":"../../../../../../Drivers/PY32F040_HAL_Driver/Src/py32f040_hal_adc.c"
+          },
+          {                
+            "path":"../../../../../../Drivers/PY32F040_HAL_Driver/Src/py32f040_hal_adc_ex.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "User",
+        "files":[
+          {
+            "path":"../Src/main.c"
+          },
+          {
+            "path":"../Src/py32f040_hal_msp.c"
+          },
+          {
+            "path":"../Src/py32f040_it.c"
+          }
+        ],
+        "folders": []
+      }
+    ]
+  },
+  "outDir": "build",
+  "deviceName": "PY32F040xB",
+  "packDir": "../../../../../../Packs/GCC/.pack/Puya/PY32F0xx_DFP",
+  "miscInfo": {
+    "uid": "36bcf0031e18a3008bbdaa90a96a7987"
+  },
+  "targets": {
+    "Project": {
+      "excludeList": [],
+      "toolchain": "GCC",
+      "compileConfig": {
+        "cpuType": "Cortex-M0+",
+        "floatingPointHardware": "none",
+        "scatterFilePath": "py32f040xb.ld",
+        "useCustomScatterFile": true,
+        "storageLayout": {
+          "RAM": [],
+          "ROM": []
+        },
+        "options": "null"
+      },
+      "uploader": "OpenOCD",
+      "uploadConfig": {
+        "bin": "",
+        "target": "py32f040",
+        "interface": "cmsis-dap",
+        "baseAddr": "0x08000000"
+      },
+      "uploadConfigMap": {
+        "JLink": {
+          "bin": "",
+          "baseAddr": "",
+          "cpuInfo": {
+            "vendor": "Puya",
+            "cpuName": "py32f040xb"
+          },
+          "proType": 1,
+          "speed": 1000,
+          "otherCmds": ""
+        },
+        "OpenOCD": {
+          "bin": "",
+          "target": "py32f040",
+          "interface": "cmsis-dap",
+          "baseAddr": "0x08000000"
+        }
+      },
+      "custom_dep": {
+        "name": "default",
+        "incList": [
+          "../Inc",
+          "../../../../../../Drivers/CMSIS/Include",
+          "../../../../../../Drivers/CMSIS/Device/PY32F040/Include",
+          "../../../../../../Drivers/PY32F040_HAL_Driver/Inc",
+          "../../../../../../Drivers/BSP/PY32F040xx_Start_Kit"
+        ],
+        "libList": [],
+        "sourceDirList": [],
+        "defineList": ["USE_HAL_DRIVER","PY32F040xB"]
+      }
+    }
+  },
+  "version": "3.3"
+}
