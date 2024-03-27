@@ -52,7 +52,7 @@ int main(void)
   /* Initialize LED */
   BSP_LED_Init(LED_GREEN);
   
-  if(READ_BIT(FLASH->SDKR,FLASH_SDKR_BOR_EN | FLASH_SDKR_BOR_LEV) != OB_BOR_OFF)
+  if(READ_BIT(FLASH->SDKR,FLASH_SDKR_BOR_EN | FLASH_SDKR_BOR_LEV) != OB_BOR_LEVEL_2p3_2p4)
   {
     APP_FlashOBProgram();
   }
@@ -74,7 +74,7 @@ static void APP_FlashOBProgram(void)
   HAL_FLASH_OB_Unlock();     /* Unlock Option */
   
   OBInitCfg.OptionType = OPTIONBYTE_BOR;
-  OBInitCfg.BORLevel= OB_BOR_OFF;
+  OBInitCfg.BORLevel= OB_BOR_LEVEL_2p3_2p4;
   
   /* Start option byte programming */
   HAL_FLASH_OBProgram(&OBInitCfg);
