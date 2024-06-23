@@ -4,8 +4,7 @@
 ================================================================================
 功能描述：
 此样例实现了定时器的基本计数功能，以及演示了ARR自动重载功能，样例在定时器重载中断
-中翻转LED灯
-修改main.c中的第56行
+中翻转LED灯修改main.c中的
 配置TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;使能自动重载
 功能，新的ARR值在第四次进中断时生效，配置TimHandle.Init.AutoReloadPreload = 
 TIM_AUTORELOAD_PRELOAD_DISABLE;禁止自动重载功能，新的ARR值在第三次进中断时生效,
@@ -14,7 +13,7 @@ TIM_AUTORELOAD_PRELOAD_DISABLE;禁止自动重载功能，新的ARR值在第三�
 Function descriptions:
 This sample demonstrates base count function of the timer,and show ARR register
 autoreload function.Example toggle LED in timer update interrupt.
-Modify line 56 in main.c.
+Modify in main.c.
 Set TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE to enable
 autoreload,and new ARR value will takes effect on the fourth interrupt generate.
 Set TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE to disable

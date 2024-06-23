@@ -84,24 +84,21 @@ int main(void)
       T_VrefBuf = 4095*1200/aADCxConvertedData; 
 
       /* Print VCC voltage */
-      printf("Vrefbuf : %umV",(unsigned int)T_VrefBuf);
+      printf("Vrefbuf : %umV \r\n",(unsigned int)T_VrefBuf);
       BSP_LED_Toggle(LED_GREEN);
     }
   }   
 }
 
+/**
+  * @brief  ADC Configuration Function
+  * @param  None
+  * @retval None
+  */
 static void APP_AdcConfig()
 {   
   ADC_ChannelConfTypeDef   sConfig = {0};  
-  RCC_PeriphCLKInitTypeDef RCC_PeriphCLKInit = {0};
-  
-  /* Enable ADC clock */
-  __HAL_RCC_ADC_CLK_ENABLE();
-  
-  RCC_PeriphCLKInit.PeriphClockSelection= RCC_PERIPHCLK_ADC;
-  RCC_PeriphCLKInit.ADCClockSelection   = RCC_ADCCLKSOURCE_PCLK_DIV4;
-  HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInit);
-  
+
   AdcHandle.Instance = ADC1;
   
   AdcHandle.Init.Resolution            = ADC_RESOLUTION_12B;             /* 12-bit resolution for converted data */
@@ -149,7 +146,6 @@ static void APP_AdcConfig()
   */
 static void APP_TimConfig(void)
 {
-  __HAL_RCC_TIM15_CLK_ENABLE();                                       /* TIM15 clock enable */
   TimHandle.Instance = TIM15;                                         /* TIM15 */
   TimHandle.Init.Period            = 8000 - 1;                        /* Period = 8000-1 */
   TimHandle.Init.Prescaler         = 1000 - 1;                        /* Prescaler = 1000-1 */

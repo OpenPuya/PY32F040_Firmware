@@ -94,12 +94,18 @@ static void APP_ConfigPWMChannel(void)
   TIM1CH1MapInit.Pin        = LL_GPIO_PIN_8;
   TIM1CH1MapInit.Mode       = LL_GPIO_MODE_ALTERNATE;
   TIM1CH1MapInit.Alternate  = LL_GPIO_AF_2; 
+  TIM1CH1MapInit.Speed      = LL_GPIO_SPEED_FREQ_HIGH;
+  TIM1CH1MapInit.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  TIM1CH1MapInit.Pull       = LL_GPIO_PULL_NO;
   LL_GPIO_Init(GPIOA,&TIM1CH1MapInit);
 
   TIM_OC_Initstruct.OCMode        = LL_TIM_OCMODE_PWM1;     /* mode：PWM1 */
   TIM_OC_Initstruct.OCState       = LL_TIM_OCSTATE_ENABLE;  /* Channel enable */
+  TIM_OC_Initstruct.OCNState      = LL_TIM_OCSTATE_DISABLE; /* Complementary channel disable */
   TIM_OC_Initstruct.OCPolarity    = LL_TIM_OCPOLARITY_HIGH; /* Compare output polarity: HIGH */
+  TIM_OC_Initstruct.OCNPolarity   = LL_TIM_OCPOLARITY_HIGH; /* Compare complementary output polarity: HIGH */
   TIM_OC_Initstruct.OCIdleState   = LL_TIM_OCIDLESTATE_LOW; /* Output Idle state: LOW */
+  TIM_OC_Initstruct.OCNIdleState  = LL_TIM_OCIDLESTATE_LOW; /* Complementary output Idle state: LOW */
   /* Channel 1 comparison value:100 */
   TIM_OC_Initstruct.CompareValue  = 100;
   /* Configure channel 1 */

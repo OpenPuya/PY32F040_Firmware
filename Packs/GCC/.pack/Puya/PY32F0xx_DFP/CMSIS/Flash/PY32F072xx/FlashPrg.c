@@ -344,7 +344,7 @@ int ProgramPage(unsigned long adr, unsigned long sz, unsigned char *buf)
     FLASH->CR  &= ~FLASH_CR_PG;                           // Programming Disabled
     FLASH->CR  &= ~FLASH_CR_EOPIE;                        // Reset FLASH_EOPIE
 
-    
+    //为了能够Program SRAM，屏蔽下面的EOP检查
 //      if (FLASH_EOP != (FLASH->SR & FLASH_EOP)) {           // Check for FLASH_SR_EOP
 //          FLASH->SR |= FLASH_EOP;
 //          return (1);                                       // Failed
@@ -373,7 +373,7 @@ int ProgramPage(unsigned long adr, unsigned long sz, unsigned char *buf)
   FLASH->SR |= FLASH_SR_EOP;                            // Reset FLASH_EOP
 
   FLASH->OPTR = (optr & 0x0000FFFF);                 // Write OPTR values
-  FLASH->SDKR = (sdkr & 0x00001F1F);                 // Write SDKR values
+  FLASH->SDKR = (sdkr & 0x0000FFFF);                 // Write SDKR values
   FLASH->WRPR = (wrpr & 0x0000FFFF);                 // Write WRPR values
 
   FLASH->CR |= FLASH_CR_OPTSTRT;
@@ -386,7 +386,7 @@ int ProgramPage(unsigned long adr, unsigned long sz, unsigned char *buf)
   FLASH->CR  &= ~FLASH_CR_OPTSTRT;                      // Programming Disabled
   FLASH->CR  &= ~FLASH_CR_EOPIE;                        // Reset FLASH_EOPIE
 
-  
+  //FLASH->CR |= FLASH_CR_OBL_LAUNCH;//不能添加这句，不然MDK下载报错
 
   return (0);                                           // Done
 }

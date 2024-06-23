@@ -147,7 +147,7 @@ static void APP_SystemClockConfig(void)
   /* RCC_OscInitStruct.HSEFreq = RCC_HSE_16_32MHz; */                                  /* HSE clock range 16~32MHz */
   RCC_OscInitStruct.LSIState = RCC_LSI_OFF;                                            /* LSI OFF */
   RCC_OscInitStruct.LSEState = RCC_LSE_OFF;                                            /* LSE OFF */
-  /* RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_MEDIUM; */                             /* Use default LSE driver factor */
+  /* RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_MEDIUM; */                             /* LSE medium drive capability */
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_OFF;                                        /* PLL OFF */
   /*RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_NONE;*/
   /*RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL2;*/

@@ -81,10 +81,9 @@ static void APP_SystemClockConfig(void)
   {
   }
   
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_0);
-  
   /* Configure APB1 prescaler and initialize */
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
+  LL_Init1msTick(LSI_VALUE);
   
   /* Update system clock global variable SystemCoreClock (can also be updated by calling SystemCoreClockUpdate function) */
   LL_SetSystemCoreClock(LSI_VALUE);
@@ -97,7 +96,7 @@ static void APP_SystemClockConfig(void)
   */
 static void APP_GPIOConfig(void)
 {
-  LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   
   /* Enable GPIOA clock */
   LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOA);

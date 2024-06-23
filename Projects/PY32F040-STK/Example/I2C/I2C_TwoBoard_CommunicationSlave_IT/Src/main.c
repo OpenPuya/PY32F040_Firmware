@@ -32,10 +32,10 @@
 #include "main.h"
 
 /* Private define ------------------------------------------------------------*/
-#define DARA_LENGTH       15                /* Length of data */
+#define DATA_LENGTH       15                /* Length of data */
 #define I2C_ADDRESS        0xA0             /* Own address 0xA0 */
 #define I2C_SPEEDCLOCK   100000             /* Communication speed : 100K */
-#define I2C_DUTYCYCLE    I2C_DUTYCYCLE_2    /* Duty cycle */
+#define I2C_DUTYCYCLE    I2C_DUTYCYCLE_16_9 /* Duty cycle */
 
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef I2cHandle;
@@ -64,9 +64,6 @@ int main(void)
   
   /* Initialize LED */
   BSP_LED_Init(LED_GREEN);
-
-  /* Initialize button */
-  BSP_PB_Init(BUTTON_KEY,BUTTON_MODE_GPIO);
   
   /* I2C initialization */
   I2cHandle.Instance             = I2C1;                      /* I2C */
@@ -84,14 +81,14 @@ int main(void)
   }
   
   /* Receive data in slave mode with interrupt */
-  while (HAL_I2C_Slave_Receive_IT(&I2cHandle, (uint8_t *)aRxBuffer, DARA_LENGTH) != HAL_OK)
+  while (HAL_I2C_Slave_Receive_IT(&I2cHandle, (uint8_t *)aRxBuffer, DATA_LENGTH) != HAL_OK)
   {
     APP_ErrorHandler();
   }
   /* Check the current I2C state */
   while (HAL_I2C_GetState(&I2cHandle) != HAL_I2C_STATE_READY);
   /* Transmit data in slave mode with interrupt */
-  while (HAL_I2C_Slave_Transmit_IT(&I2cHandle, (uint8_t *)aTxBuffer, DARA_LENGTH) != HAL_OK)
+  while (HAL_I2C_Slave_Transmit_IT(&I2cHandle, (uint8_t *)aTxBuffer, DATA_LENGTH) != HAL_OK)
   {
     APP_ErrorHandler();
   }
@@ -114,7 +111,7 @@ int main(void)
 static void APP_CheckEndOfTransfer(void)
 {
   /* Compare the transmitted data with the received data */
-  if(APP_Buffercmp8((uint8_t*)aTxBuffer, (uint8_t*)aRxBuffer, DARA_LENGTH))
+  if(APP_Buffercmp8((uint8_t*)aTxBuffer, (uint8_t*)aRxBuffer, DATA_LENGTH))
   {
     /* Error handling */
     APP_LedBlinking();

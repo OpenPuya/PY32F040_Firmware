@@ -36,7 +36,7 @@
 struct FlashDevice const FlashDevice  =
 {
     FLASH_DRV_VERS,             // Driver Version, do not modify!
-    "PY32F072xx 32kB Flash",   // Device Name (32kB)
+    "Cortex-M0+ 32kB Flash",    // Device Name (32kB)
     ONCHIP,                     // Device Type
     0x08000000,                 // Device Start Address
     0x00008000,                 // Device Size in Bytes (128kB)
@@ -56,7 +56,7 @@ struct FlashDevice const FlashDevice  =
 struct FlashDevice const FlashDevice  =
 {
     FLASH_DRV_VERS,             // Driver Version, do not modify!
-    "PY32F072xx 64kB Flash",   // Device Name (64kB)
+    "Cortex-M0+ 64kB Flash",    // Device Name (64kB)
     ONCHIP,                     // Device Type
     0x08000000,                 // Device Start Address
     0x00010000,                 // Device Size in Bytes (128kB)
@@ -76,7 +76,7 @@ struct FlashDevice const FlashDevice  =
 struct FlashDevice const FlashDevice  =
 {
     FLASH_DRV_VERS,             // Driver Version, do not modify!
-    "PY32F072xx 96kB Flash",   // Device Name (96kB)
+    "Cortex-M0+ 96kB Flash",    // Device Name (96kB)
     ONCHIP,                     // Device Type
     0x08000000,                 // Device Start Address
     0x00018000,                 // Device Size in Bytes (128kB)
@@ -96,7 +96,7 @@ struct FlashDevice const FlashDevice  =
 struct FlashDevice const FlashDevice  =
 {
     FLASH_DRV_VERS,             // Driver Version, do not modify!
-    "PY32F072xx 128kB Flash",   // Device Name (128kB)
+    "Cortex-M0+ 128kB Flash",   // Device Name (128kB)
     ONCHIP,                     // Device Type
     0x08000000,                 // Device Start Address
     0x00020000,                 // Device Size in Bytes (128kB)
@@ -118,7 +118,7 @@ struct FlashDevice const FlashDevice  =
 struct FlashDevice const FlashDevice  =  
 {
   FLASH_DRV_VERS,                     // Driver Version, do not modify!
-  "PY32F072xx Flash Options",         // Device Name
+  "Cortex-M0+ Flash Options",         // Device Name
   ONCHIP,                             // Device Type
   0x1FFF3100,                         // Device Start Address
   0x00000020,                         // Device Size in Bytes (32)

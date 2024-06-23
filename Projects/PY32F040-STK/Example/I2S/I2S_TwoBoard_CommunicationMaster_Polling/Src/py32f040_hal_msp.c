@@ -55,7 +55,7 @@ void HAL_MspInit(void)
   */
 void HAL_I2S_MspInit(I2S_HandleTypeDef *hi2s)
 {
-  GPIO_InitTypeDef  GPIO_InitStruct;
+  GPIO_InitTypeDef  GPIO_InitStruct = {0};
   
   /* Enable clock */
   __HAL_RCC_SPI2_CLK_ENABLE();

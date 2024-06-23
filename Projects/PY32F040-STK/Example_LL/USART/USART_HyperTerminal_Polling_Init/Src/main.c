@@ -33,9 +33,14 @@
 #include "py32f040xx_ll_Start_Kit.h"
 
 /* Private define ------------------------------------------------------------*/
+#define COUNTOF(__BUFFER__)   (sizeof(__BUFFER__) / sizeof(*(__BUFFER__)))
+#define TXSTARTMESSAGESIZE    (COUNTOF(aTxStartMessage) - 1)
+#define TXENDMESSAGESIZE      (COUNTOF(aTxEndMessage) - 1)
+
 /* Private variables ---------------------------------------------------------*/
-uint8_t aTxBuffer[] = "UART Test";
-uint8_t aRxBuffer[30];
+uint8_t aRxBuffer[12] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+uint8_t aTxStartMessage[] = "\n\r USART Hyperterminal communication based on polling \n\r Enter 12 characters using keyboard :\n\r";
+uint8_t aTxEndMessage[] = "\n\r Example Finished\n\r";
 
 uint8_t *TxBuff = NULL;
 __IO uint16_t TxCount = 0;
@@ -61,19 +66,31 @@ int main(void)
   /* Configure Systemclock */
   APP_SystemClockConfig(); 
 
+  /* Configure LED */
+  BSP_LED_Init(LED_GREEN);
+  
   /* USART configuration */
   APP_ConfigUsart();
   
-  /* Send string:"UART Test"，and wait send complete */
-  APP_UsartTransmit(USART2, (uint8_t*)aTxBuffer, sizeof(aTxBuffer)-1);
+  /* Start the transmission process */
+  APP_UsartTransmit(USART2, (uint8_t*)aTxStartMessage, TXSTARTMESSAGESIZE);
 
+  /* receive data */
+  APP_UsartReceive(USART2, (uint8_t *)aRxBuffer, 12);
+
+  /* Transmit data */
+  APP_UsartTransmit(USART2, (uint8_t*)aRxBuffer, 12);
+  
+  /* Send the End Message  */
+  APP_UsartTransmit(USART2, (uint8_t*)aTxEndMessage, TXENDMESSAGESIZE);
+  
+  /* Turn on LED if test passes then enter infinite loop */
+  BSP_LED_On(LED_GREEN);
+  
+  /* Infinite loop */
   while (1)
   {
-    /* Receive data */
-    APP_UsartReceive(USART2, (uint8_t *)aRxBuffer, 12);
-    
-    /* Send data */
-    APP_UsartTransmit(USART2, (uint8_t*)aRxBuffer, 12);
+
   }
 }
 
@@ -120,7 +137,7 @@ static void APP_ConfigUsart(void)
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART2);
   
   /* GPIOA configuration */
-  LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* Select pin 2 */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_2;
   /* Select alternate function mode */
@@ -144,7 +161,7 @@ static void APP_ConfigUsart(void)
   LL_GPIO_Init(GPIOA,&GPIO_InitStruct);
   
   /* Set USART feature */
-  LL_USART_InitTypeDef USART_InitStruct;
+  LL_USART_InitTypeDef USART_InitStruct = {0};
   /* Set baud rate */
   USART_InitStruct.BaudRate = 9600;
   /* set word length to 8 bits: Start bit, 8 data bits, n stop bits */

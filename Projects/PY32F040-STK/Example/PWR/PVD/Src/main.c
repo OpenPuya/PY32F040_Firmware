@@ -67,8 +67,9 @@ int main(void)
 static void APP_PvdConfig(void)
 {
   /* Enable PWR clock and GPIOB clock */
-  GPIO_InitTypeDef  GPIO_InitStruct;
-  PWR_PVDTypeDef sConfigPVD;
+  GPIO_InitTypeDef  GPIO_InitStruct = {0};
+  PWR_PVDTypeDef    sConfigPVD      = {0};
+
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
@@ -80,10 +81,12 @@ static void APP_PvdConfig(void)
 
   sConfigPVD.Mode = PWR_PVD_MODE_IT_RISING_FALLING;     /* Configure PVD for rising/falling edge interrupt */
   sConfigPVD.PVDFilter = PWR_PVD_FILTER_NONE;           /* Disable filtering */
-  sConfigPVD.PVDLevel = PWR_PVDLEVEL_0;                 /* This parameter is invalid as PB07 is used as the detection source */
+/*  sConfigPVD.PVDLevel = PWR_PVDLEVEL_0; */            /* This parameter is invalid as PB07 is used as the detection source */
   sConfigPVD.PVDSource = PWR_PVD_SOURCE_PB07;           /* PVD detection for PB07 */
   HAL_PWR_ConfigPVD(&sConfigPVD);  
+
   /* Initialize PVD */
+  HAL_NVIC_SetPriority(PVD_IRQn, 0, 0);                 /* Interrupt priority setting */
   HAL_NVIC_EnableIRQ(PVD_IRQn);
 }
 

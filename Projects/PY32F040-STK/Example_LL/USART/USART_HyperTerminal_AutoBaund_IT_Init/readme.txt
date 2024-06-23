@@ -31,7 +31,7 @@ PA02(TX) --> RX
 PA03(RX) --> TX
 GND      --> GND
 3. PC端打开串口调试助手，正确连接上通讯COM口，
-   波特率设置为9600，1位停止位，8位数据位，无奇偶校验。
+   波特率设置为115200，1位停止位，8位数据位，无奇偶校验。
 4. 调试助手发送一个字符0x55，MCU反馈字符串：Auto BaudRate Test；
 
 Example execution steps:
@@ -43,7 +43,7 @@ PA02(TX) --> RX
 PA03(RX) --> TX
 GND     -->  GND
 3. Open the serial port Assistant on the PC, connect the COM port correctly, and
-set the baud rate to 9600,1 stop bit, and 8 data bit ,without parity check.
+set the baud rate to 115200,1 stop bit, and 8 data bit ,without parity check.
 4. Send a character 0x55 using the serial assistant. The MCU will return the 
 string "Auto BaudRate Test".
 ================================================================================

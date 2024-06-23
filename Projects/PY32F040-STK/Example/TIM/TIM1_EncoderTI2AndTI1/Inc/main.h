@@ -44,9 +44,6 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 /* Exported variables prototypes ---------------------------------------------*/
-extern uint32_t Arr_DMA[3];
-extern TIM_HandleTypeDef    TimHandle;
-
 /* Exported functions prototypes ---------------------------------------------*/
 void APP_ErrorHandler(void);
 

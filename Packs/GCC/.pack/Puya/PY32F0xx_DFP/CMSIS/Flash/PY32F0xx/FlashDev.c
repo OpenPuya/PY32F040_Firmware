@@ -36,7 +36,7 @@
 struct FlashDevice const FlashDevice  =
 {
   FLASH_DRV_VERS,             // Driver Version, do not modify!
-  "PY32F0xx 8kB Flash",       // Device Name (8kB)
+  "Cortex-M0+ 8kB Flash",     // Device Name (8kB)
   ONCHIP,                     // Device Type
   0x08000000,                 // Device Start Address
   0x00002000,                 // Device Size in Bytes (8kB)
@@ -56,7 +56,7 @@ struct FlashDevice const FlashDevice  =
 struct FlashDevice const FlashDevice  =
 {
   FLASH_DRV_VERS,             // Driver Version, do not modify!
-  "PY32F0xx 16kB Flash",      // Device Name (16kB)
+  "Cortex-M0+ 16kB Flash",    // Device Name (16kB)
   ONCHIP,                     // Device Type
   0x08000000,                 // Device Start Address
   0x00004000,                 // Device Size in Bytes (16kB)
@@ -76,7 +76,7 @@ struct FlashDevice const FlashDevice  =
 struct FlashDevice const FlashDevice  =
 {
   FLASH_DRV_VERS,             // Driver Version, do not modify!
-  "PY32F0xx 20kB Flash",      // Device Name (20kB)
+  "Cortex-M0+ 20kB Flash",    // Device Name (20kB)
   ONCHIP,                     // Device Type
   0x08000000,                 // Device Start Address
   0x00005000,                 // Device Size in Bytes (20kB)
@@ -96,7 +96,7 @@ struct FlashDevice const FlashDevice  =
 struct FlashDevice const FlashDevice  =
 {
   FLASH_DRV_VERS,             // Driver Version, do not modify!
-  "PY32F0xx 24kB Flash",      // Device Name (24kB)
+  "Cortex-M0+ 24kB Flash",    // Device Name (24kB)
   ONCHIP,                     // Device Type
   0x08000000,                 // Device Start Address
   0x00006000,                 // Device Size in Bytes (24kB)
@@ -116,7 +116,7 @@ struct FlashDevice const FlashDevice  =
 struct FlashDevice const FlashDevice  =
 {
   FLASH_DRV_VERS,             // Driver Version, do not modify!
-  "PY32F0xx 32kB Flash",      // Device Name (32kB)
+  "Cortex-M0+ 32kB Flash",    // Device Name (32kB)
   ONCHIP,                     // Device Type
   0x08000000,                 // Device Start Address
   0x00008000,                 // Device Size in Bytes (32kB)
@@ -136,7 +136,7 @@ struct FlashDevice const FlashDevice  =
 struct FlashDevice const FlashDevice  =
 {
   FLASH_DRV_VERS,             // Driver Version, do not modify!
-  "PY32F0xx 48kB Flash",      // Device Name (48kB)
+  "Cortex-M0+ 48kB Flash",    // Device Name (48kB)
   ONCHIP,                     // Device Type
   0x08000000,                 // Device Start Address
   0x0000C000,                 // Device Size in Bytes (48kB)
@@ -156,7 +156,7 @@ struct FlashDevice const FlashDevice  =
 struct FlashDevice const FlashDevice  =
 {
   FLASH_DRV_VERS,             // Driver Version, do not modify!
-  "PY32F0xx 64kB Flash",      // Device Name (64kB)
+  "Cortex-M0+ 64kB Flash",    // Device Name (64kB)
   ONCHIP,                     // Device Type
   0x08000000,                 // Device Start Address
   0x00010000,                 // Device Size in Bytes (64kB)
@@ -178,7 +178,7 @@ struct FlashDevice const FlashDevice  =
 struct FlashDevice const FlashDevice  =
 {
   FLASH_DRV_VERS,                     // Driver Version, do not modify!
-  "PY32F0xx Flash Options",           // Device Name
+  "Cortex-M0+ Flash Options",           // Device Name
   ONCHIP,                             // Device Type
   0x1FFF0E80,                         // Device Start Address
   0x00000010,                         // Device Size in Bytes (16)

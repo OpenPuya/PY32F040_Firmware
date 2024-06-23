@@ -32,7 +32,7 @@
 #include "main.h"
 /* Private define ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-TIM_HandleTypeDef    TimHandle, htim3;
+TIM_HandleTypeDef    TimHandle1, TimHandle3;
 TIM_SlaveConfigTypeDef   sSlaveConfig;
 TIM_MasterConfigTypeDef sMasterConfig;
 TIM_OC_InitTypeDef sConfig;
@@ -59,27 +59,27 @@ int main(void)
   /* Initialize LED */
   BSP_LED_Init(LED_GREEN);
 
-  TimHandle.Instance = TIM1;                                           /* Select TIM1 */
-  TimHandle.Init.Period            = 8000 - 1;                         /* Auto reload value： */
-  TimHandle.Init.Prescaler         = 100 - 1;                          /* Prescaler:100-1 */
-  TimHandle.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;           /* Clock division: tDTS=tCK_INT */
-  TimHandle.Init.CounterMode       = TIM_COUNTERMODE_UP;               /* CounterMode:Up */
-  TimHandle.Init.RepetitionCounter = 1 - 1;                            /* repetition counter value:1-1 */
-  TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;   /* TIM1_ARR register is not buffered */
+  TimHandle1.Instance = TIM1;                                           /* Select TIM1 */
+  TimHandle1.Init.Period            = 8000 - 1;                         /* Auto reload value： */
+  TimHandle1.Init.Prescaler         = 100 - 1;                          /* Prescaler:100-1 */
+  TimHandle1.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;           /* Clock division: tDTS=tCK_INT */
+  TimHandle1.Init.CounterMode       = TIM_COUNTERMODE_UP;               /* CounterMode:Up */
+  TimHandle1.Init.RepetitionCounter = 1 - 1;                            /* repetition counter value:1-1 */
+  TimHandle1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;   /* TIM1_ARR register is not buffered */
   /* Initialize TIM1 */
-  if (HAL_TIM_Base_Init(&TimHandle) != HAL_OK)
+  if (HAL_TIM_Base_Init(&TimHandle1) != HAL_OK)
   {
     APP_ErrorHandler();
   }
 
-  htim3.Instance = TIM3;                                               /* Select TIM3 */
-  htim3.Init.Prescaler = 1000 - 1;                                     /* Prescaler:1000-1 */
-  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;                         /* CounterMode:Up */
-  htim3.Init.Period = 8000 - 1;                                        /* Auto reload value： */
-  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;                   /* Clock division: tDTS=tCK_INT */
-  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;       /* TIM1_ARR register is not buffered */
+  TimHandle3.Instance = TIM3;                                               /* Select TIM3 */
+  TimHandle3.Init.Prescaler = 1000 - 1;                                     /* Prescaler:1000-1 */
+  TimHandle3.Init.CounterMode = TIM_COUNTERMODE_UP;                         /* CounterMode:Up */
+  TimHandle3.Init.Period = 8000 - 1;                                        /* Auto reload value： */
+  TimHandle3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;                   /* Clock division: tDTS=tCK_INT */
+  TimHandle3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;       /* TIM1_ARR register is not buffered */
   /* Initializes the TIM Output Compare */
-  if (HAL_TIM_OC_Init(&htim3) != HAL_OK)
+  if (HAL_TIM_OC_Init(&TimHandle3) != HAL_OK)
   {
     APP_ErrorHandler();
   }
@@ -87,7 +87,7 @@ int main(void)
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;                 /* Update event is used as trigger output (TRGO) */
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;         /* The master/slave mode is disabled */
   /* Configures the TIM3 in master mode. */
-  HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig);
+  HAL_TIMEx_MasterConfigSynchronization(&TimHandle3, &sMasterConfig);
 
   sSlaveConfig.SlaveMode        = TIM_SLAVEMODE_TRIGGER;               /* Slave mode is trigger mode */
   sSlaveConfig.InputTrigger     = TIM_TS_ITR2;                         /* The trigger selection for TIM1 is TIM3 */
@@ -95,15 +95,15 @@ int main(void)
   sSlaveConfig.TriggerPrescaler = TIM_TRIGGERPRESCALER_DIV1;           /* Prescaler OFF */
   sSlaveConfig.TriggerFilter    = 0;                                   /* No filter */
   /* Configures the TIM1 in Slave mode */
-  if (HAL_TIM_SlaveConfigSynchro(&TimHandle, &sSlaveConfig) != HAL_OK)
+  if (HAL_TIM_SlaveConfigSynchro(&TimHandle1, &sSlaveConfig) != HAL_OK)
   {
     APP_ErrorHandler();
   }
   /* Enable TIM1 update interrupt */
-  __HAL_TIM_ENABLE_IT(&TimHandle, TIM_IT_UPDATE);
+  __HAL_TIM_ENABLE_IT(&TimHandle1, TIM_IT_UPDATE);
   
   /* Starts the TIM3 Output Compare signal generation. */
-  if (HAL_TIM_OC_Start(&htim3, TIM_CHANNEL_1) != HAL_OK)
+  if (HAL_TIM_OC_Start(&TimHandle3, TIM_CHANNEL_1) != HAL_OK)
   {
     APP_ErrorHandler();
   }

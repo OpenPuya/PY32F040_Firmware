@@ -57,6 +57,7 @@ struct date_t RTC_DateStruct;
 uint8_t EndOfMonth[12]= {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 /* Buffer for displaying time and date */
 uint32_t TimeCounter = 0;
+uint32_t AlarmCounter = 0;
 uint8_t aShowTime[50] = {0};
 uint8_t aShowDate[50] = {0};
 
@@ -98,23 +99,29 @@ int main(void)
   {
   }
   
+  /* Get the current time */
+  AlarmCounter = LL_RTC_TIME_Get(RTC);
+  
+  /* Set alarm time */
+  APP_ConfigRtcAlarm();
+  
   /* Turn off LED */
   BSP_LED_Off(LED_GREEN);
 
   while (1)
   {
-    /* Wait for synchronization */
-    LL_RTC_WaitForSynchro(RTC);
-    
     /* Update time and date */
-     APP_UpadateRtcTimeStruct();
-     APP_UpadateRtcDateStruct();
-    
-    /* Set alarm time */
-    APP_ConfigRtcAlarm();
+    APP_UpadateRtcTimeStruct();
+    APP_UpadateRtcDateStruct();
     
     /* Enter STOP mode */
     APP_EnterStop();
+    
+    /* Wait for synchronization */
+    LL_RTC_WaitForSynchro(RTC);
+    
+    /* Set alarm time */
+    APP_ConfigRtcAlarm();
   }
 }
 
@@ -155,7 +162,7 @@ static void APP_SystemClockConfig(void)
   */
 static void APP_ConfigRtc(void)
 {
-  LL_RTC_InitTypeDef rtc_initstruct;
+  LL_RTC_InitTypeDef rtc_initstruct = {0};
   
   /*##-1- Enable PWR clock and enable access to the backup domain #######*/
   /* To change the source clock of the RTC functionalities (LSE, LSI), you have to:
@@ -202,7 +209,7 @@ static void APP_ConfigRtc(void)
     
   }
   
-  LL_RTC_TimeTypeDef  rtc_time_initstruct;
+  LL_RTC_TimeTypeDef  rtc_time_initstruct = {0};
   /*## Configure Date ##################################################*/
   /* Set date: 2022.08.16 */
   APP_ConfigRtcDate(16, 8, 22);
@@ -226,37 +233,22 @@ static void APP_ConfigRtc(void)
   */
 static void APP_ConfigRtcAlarm(void)
 {
-    LL_RTC_AlarmTypeDef rtc_alarm_initstruct;
   /*##Configure Alarm #################################*/
-  rtc_alarm_initstruct.AlarmTime.Hours      = RTC_TimeStruct.hour;
-  rtc_alarm_initstruct.AlarmTime.Minutes    = RTC_TimeStruct.min;
-  rtc_alarm_initstruct.AlarmTime.Seconds    = RTC_TimeStruct.sec + 1;
-  if (LL_RTC_ALARM_Init(RTC, LL_RTC_FORMAT_BIN, &rtc_alarm_initstruct) != SUCCESS)   
+  AlarmCounter += 1;
+  if (LL_RTC_ALARM_SetCounter(RTC, AlarmCounter) != SUCCESS)
   {
     /* Error prompt */
   }
-  
-  /* Disable write protection of RTC registers */
-  LL_RTC_DisableWriteProtection(RTC);
   
   /* Clear alarm interrupt flag */
   LL_RTC_ClearFlag_ALR(RTC);
   
   /* Enable alarm interrupt */
   LL_RTC_EnableIT_ALR(RTC);
-
-  /* Enable write protection of RTC registers */
-  LL_RTC_EnableWriteProtection(RTC);
   
   /*##- Configure RTC NVIC ###############################*/
   NVIC_SetPriority(RTC_IRQn, 0x00);
   NVIC_EnableIRQ(RTC_IRQn);
-
-  /*##-Exit Initialization Mode #######################################*/
-  if (LL_RTC_ExitInitMode(RTC) != SUCCESS)   
-  {
-    /* Error prompt */
-  }
   
   /* Enable RTC EXTI interrupt */
   LL_EXTI_EnableIT(LL_EXTI_LINE_19);
@@ -320,12 +312,17 @@ static void APP_EnterStop(void)
 {
   /* Enable PWR clock */
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-
-  /* Clear SLEEPDEEP bit */
+  
+  /* Enable Low Power Run mode */
+  LL_PWR_EnableLowPowerRunMode();
+  
+  /* Enter DeepSleep mode */
   LL_LPM_EnableDeepSleep();
   
   /* Request Wait For Interrupt */
   __WFI();
+    
+  LL_LPM_EnableSleep();
 }
 
 /**

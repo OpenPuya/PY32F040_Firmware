@@ -23,12 +23,12 @@ GCC Version: GNU Arm Embedded Toolchain 10.3-2021.10
 ================================================================================
 使用步骤：
 1. 编译下载程序到MCU，并运行；
-2. GPIO每个时钟周期输出翻转一次，可观测到端口PA11输出波形输出波形频率为12MHz。
+2. GPIO每个时钟周期输出翻转一次，可观测到端口PA11输出频率为12MHz的波形。
 
 Example execution steps:
 1.Compile and download the program to MCU and run it;
-2.GPIO flips its output once per clock cycle, and it can be observed that the 
-output waveform frequency of port PA11 is 12MHz.
+2. GPIO flips the output once per clock cycle, and a waveform with an output 
+frequency of 12MHz can be observed from port PA11.
 ================================================================================
 注意事项：
 

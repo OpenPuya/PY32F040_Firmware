@@ -52,8 +52,17 @@ void HAL_MspInit(void)
   */
 void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc)
 {
-  GPIO_InitTypeDef GPIO_InitStruct={0};
-  __HAL_RCC_GPIOA_CLK_ENABLE();                               /* GPIOA clock enable */
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  RCC_PeriphCLKInitTypeDef RCC_PeriphCLKInit = {0};
+  /* GPIOA clock enable */
+  __HAL_RCC_GPIOA_CLK_ENABLE();                              
+
+  /* Enable ADC clock */
+  __HAL_RCC_ADC_CLK_ENABLE();
+  
+  RCC_PeriphCLKInit.PeriphClockSelection= RCC_PERIPHCLK_ADC;
+  RCC_PeriphCLKInit.ADCClockSelection   = RCC_ADCCLKSOURCE_PCLK_DIV4;
+  HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInit);
  
   GPIO_InitStruct.Pin = GPIO_PIN_4;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;

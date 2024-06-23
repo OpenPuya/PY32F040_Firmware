@@ -45,8 +45,6 @@ extern "C" {
 /* Private defines -----------------------------------------------------------*/
 /* Exported variables prototypes ---------------------------------------------*/
 extern I2S_HandleTypeDef I2sHandle;
-extern DMA_HandleTypeDef HdmaCh1;
-extern DMA_HandleTypeDef HdmaCh2;
 
 /* Exported functions prototypes ---------------------------------------------*/
 void APP_ErrorHandler(void);

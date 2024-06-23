@@ -95,16 +95,15 @@ static void APP_CompConfig(void)
   /* Enter the Minus terminal and select VREFINT      */
   /* Hysteresis not enabled                  */
   /* Polarity not reversed                  */
-  COMP_InitStruct.InputPlus = LL_COMP_INPUT_PLUS_IO4;
-  COMP_InitStruct.InputMinus = LL_COMP_INPUT_MINUS_IO13;
+  COMP_InitStruct.InputPlus       = LL_COMP_INPUT_PLUS_IO4;
+  COMP_InitStruct.InputMinus      = LL_COMP_INPUT_MINUS_IO13;
   COMP_InitStruct.InputHysteresis = LL_COMP_HYSTERESIS_DISABLE;
-  COMP_InitStruct.OutputPolarity = LL_COMP_OUTPUTPOL_NONINVERTED;
+  COMP_InitStruct.OutputPolarity  = LL_COMP_OUTPUTPOL_NONINVERTED;
+  COMP_InitStruct.PowerMode       = LL_COMP_POWERMODE_HIGHSPEED ;
+  COMP_InitStruct.DigitalFilter   = 0;
   
   /* Initialize Comparator 1 */
   LL_COMP_Init(COMP1, &COMP_InitStruct);
-
-  /* Power consumption mode fast */
-  LL_COMP_SetPowerMode(COMP1, LL_COMP_POWERMODE_HIGHSPEED);
  
   /* Window mode not enabled */
   LL_COMP_SetCommonWindowMode(__LL_COMP_COMMON_INSTANCE(COMP1), LL_COMP_WINDOWMODE_DISABLE);

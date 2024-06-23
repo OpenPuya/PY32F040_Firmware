@@ -125,7 +125,7 @@ static void APP_PvdConfig(void)
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
   
   /* PB07 as detection source, this parameter is not effective */
-  LL_PWR_SetPVDLevel(LL_PWR_PVDLEVEL_0);
+/*  LL_PWR_SetPVDLevel(LL_PWR_PVDLEVEL_0); */
   
   /* Disable filtering function */
   LL_PWR_DisablePVDFilter();
@@ -186,6 +186,23 @@ static void APP_SystemClockConfig(void)
 
   /* Update system clock global variable SystemCoreClock (can also be updated by calling SystemCoreClockUpdate function) */
   LL_SetSystemCoreClock(8000000);
+}
+
+/**
+  * @brief  PVD interrupt callback
+  * @param  None
+  * @retval None
+  */
+void APP_PvdCallback(void)
+{
+  if (LL_PWR_IsActiveFlag_PVDO())
+  {
+    BSP_LED_On(LED_GREEN);
+  }
+  else
+  {
+    BSP_LED_Off(LED_GREEN);
+  }
 }
 
 /**

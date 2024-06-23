@@ -5465,18 +5465,18 @@ typedef struct
 #define LCD_POEN1_S35_Pos               (3U)
 #define LCD_POEN1_S35_Msk               (0x1UL << LCD_POEN1_S35_Pos)              /*!< 0x00000008 */
 #define LCD_POEN1_S35                   LCD_POEN1_S35_Msk
-#define LCD_POEN1_S36_Pos               (4U)
-#define LCD_POEN1_S36_Msk               (0x1UL << LCD_POEN1_S36_Pos)              /*!< 0x00000010 */
-#define LCD_POEN1_S36                   LCD_POEN1_S36_Msk
-#define LCD_POEN1_S37_Pos               (5U)
-#define LCD_POEN1_S37_Msk               (0x1UL << LCD_POEN1_S37_Pos)              /*!< 0x00000020 */
-#define LCD_POEN1_S37                   LCD_POEN1_S37_Msk
-#define LCD_POEN1_S38_Pos               (6U)
-#define LCD_POEN1_S38_Msk               (0x1UL << LCD_POEN1_S38_Pos)              /*!< 0x00000040 */
-#define LCD_POEN1_S38                   LCD_POEN1_S38_Msk
-#define LCD_POEN1_S39_Pos               (7U)
-#define LCD_POEN1_S39_Msk               (0x1UL << LCD_POEN1_S39_Pos)              /*!< 0x00000080 */
+#define LCD_POEN1_S39_Pos               (4U)
+#define LCD_POEN1_S39_Msk               (0x1UL << LCD_POEN1_S39_Pos)              /*!< 0x00000010 */
 #define LCD_POEN1_S39                   LCD_POEN1_S39_Msk
+#define LCD_POEN1_S38_Pos               (5U)
+#define LCD_POEN1_S38_Msk               (0x1UL << LCD_POEN1_S38_Pos)              /*!< 0x00000020 */
+#define LCD_POEN1_S38                   LCD_POEN1_S38_Msk
+#define LCD_POEN1_S37_Pos               (6U)
+#define LCD_POEN1_S37_Msk               (0x1UL << LCD_POEN1_S37_Pos)              /*!< 0x00000040 */
+#define LCD_POEN1_S37                   LCD_POEN1_S37_Msk
+#define LCD_POEN1_S36_Pos               (7U)
+#define LCD_POEN1_S36_Msk               (0x1UL << LCD_POEN1_S36_Pos)              /*!< 0x00000080 */
+#define LCD_POEN1_S36                   LCD_POEN1_S36_Msk
 
 #define LCD_POEN1_C0_Pos                (8U)
 #define LCD_POEN1_C0_Msk                (0x1UL << LCD_POEN1_C0_Pos)               /*!< 0x00000100 */

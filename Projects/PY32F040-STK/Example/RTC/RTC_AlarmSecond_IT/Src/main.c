@@ -58,8 +58,9 @@ int main(void)
   DEBUG_USART_Config();
   
   /* RTC initialization */
-  RtcHandle.Instance = RTC;                       /* Select RTC */
+  RtcHandle.Instance = RTC;                        /* Select RTC */
   RtcHandle.Init.AsynchPrediv = RTC_AUTO_1_SECOND; /* RTC asynchronous prescaler calculated automatically for one second time base */
+  RtcHandle.Init.OutPut = RTC_OUTPUTSOURCE_NONE;   /* No output on the TAMPER pin */
   if (HAL_RTC_Init(&RtcHandle) != HAL_OK)
   {
     APP_ErrorHandler();
@@ -80,8 +81,18 @@ int main(void)
   */
 void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)
 {
-  printf("RTC_IT_SEC\r\n");
   APP_RtcTimeShow();
+  printf("RTC_IT_SEC\r\n");
+}
+
+/**
+  * @brief  Alarm interrupt callback function
+  * @param  hrtc：RTC handle
+  * @retval None
+  */
+void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
+{
+  printf("RTC_IT_ALARM\r\n");
 }
 
 /**
@@ -91,9 +102,9 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)
   */
 static void APP_RtcAlarmConfig(void)
 {
-  RTC_DateTypeDef  sdatestructure;
-  RTC_TimeTypeDef  stimestructure;
-  RTC_AlarmTypeDef salarmstructure;
+  RTC_DateTypeDef  sdatestructure = {0};
+  RTC_TimeTypeDef  stimestructure = {0};
+  RTC_AlarmTypeDef salarmstructure = {0};
 
   /* Set date: 2021/5/21, Tuesday */
   sdatestructure.Year = 0x21;
@@ -131,8 +142,8 @@ static void APP_RtcAlarmConfig(void)
   */
 static void APP_RtcTimeShow(void)
 {
-  RTC_DateTypeDef sdatestructureget;
-  RTC_TimeTypeDef stimestructureget;
+  RTC_DateTypeDef sdatestructureget = {0};
+  RTC_TimeTypeDef stimestructureget = {0};
   
   /* Get the current RTC time */
   HAL_RTC_GetTime(&RtcHandle, &stimestructureget, RTC_FORMAT_BIN);
@@ -160,10 +171,10 @@ static void APP_SystemClockConfig(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_8MHz;            /* Configure HSI output clock as 8MHz */
   RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;                                    /* HSI not divided */
   RCC_OscInitStruct.HSEState = RCC_HSE_OFF;                                   /* Disable HSE */
-  RCC_OscInitStruct.HSEFreq = RCC_HSE_16_32MHz;                               /* HSE crystal frequency range 16M~32M */
+  /*RCC_OscInitStruct.HSEFreq = RCC_HSE_16_32MHz;*/                           /* HSE crystal frequency range 16M~32M */
   RCC_OscInitStruct.LSIState = RCC_LSI_OFF;                                   /* Disable LSI */
   RCC_OscInitStruct.LSEState = RCC_LSE_OFF;                                   /* Disable LSE */
-  RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_MEDIUM;                          /* Default LSE  drive capability */
+  /*RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_MEDIUM;*/                      /* LSE medium drive capability */
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_OFF;                               /* Disable PLL */
   /*RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_NONE;*/
   /*RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL2;*/
@@ -173,10 +184,10 @@ static void APP_SystemClockConfig(void)
   }
 
   /*Initialize CPU, AHB, and APB bus clocks */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1; /* RCC system clock types */
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSISYS;                                        /* SYSCLK source is HSI */
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;                                            /* AHB clock not divided */
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;                                              /* APB clock not divided */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1;  /* RCC system clock types */
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSISYS;                                       /* SYSCLK source is HSI */
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;                                              /* AHB clock not divided */
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;                                               /* APB clock not divided */
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
     APP_ErrorHandler();

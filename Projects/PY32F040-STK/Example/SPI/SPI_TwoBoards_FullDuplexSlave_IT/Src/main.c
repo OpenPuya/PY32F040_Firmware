@@ -33,7 +33,7 @@
 #include "main.h"
 
 /* Private define ------------------------------------------------------------*/
-#define DARA_LENGTH       15
+#define DATA_LENGTH       15
 
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef Spi1Handle;
@@ -74,13 +74,15 @@ int main(void)
   Spi1Handle.Init.CLKPhase          = SPI_PHASE_1EDGE ;           /* Data sampling starts at the first clock edge */
   Spi1Handle.Init.DataSize          = SPI_DATASIZE_8BIT;          /* SPI Data Size is 8 bit */
   Spi1Handle.Init.FirstBit          = SPI_FIRSTBIT_MSB;           /* SPI MSB Transmission */
-  Spi1Handle.Init.NSS               = SPI_NSS_HARD_INPUT;         /* NSS Software Mode */
+  Spi1Handle.Init.NSS               = SPI_NSS_HARD_INPUT;         /* NSS Hardware Mode */
   Spi1Handle.Init.Mode = SPI_MODE_SLAVE;                          /* Configure as slave */
   Spi1Handle.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;    /* The CRC check is disabled */
   /* Spi1Handle.Init.CRCPolynomial = 1; */                              /* CRC polynomial value */
-  if (HAL_SPI_DeInit(&Spi1Handle) != HAL_OK)                      /*  De-Initialize the SPI */
-  {
 
+  /* DeInitialize SPI peripheral */
+  if (HAL_SPI_DeInit(&Spi1Handle) != HAL_OK)
+  {
+    APP_ErrorHandler();
   }
   
   /* Initialize SPI peripheral */
@@ -90,7 +92,7 @@ int main(void)
   }
   
   /* Transmit and Receive an amount of data in non-blocking mode with Interrupt */
-  if (HAL_SPI_TransmitReceive_IT(&Spi1Handle, (uint8_t *)TxBuff, (uint8_t *)RxBuff, DARA_LENGTH) != HAL_OK)
+  if (HAL_SPI_TransmitReceive_IT(&Spi1Handle, (uint8_t *)TxBuff, (uint8_t *)RxBuff, DATA_LENGTH) != HAL_OK)
   {
     APP_ErrorHandler();
   }
@@ -115,7 +117,7 @@ static void APP_WaitAndCheckEndOfTransfer(void)
   {}
 
   /* Compare sent and received data */
-  if(APP_Buffercmp8((uint8_t*)TxBuff, (uint8_t*)RxBuff, DARA_LENGTH))
+  if(APP_Buffercmp8((uint8_t*)TxBuff, (uint8_t*)RxBuff, DATA_LENGTH))
   {
     /* error handling */
     APP_LedBlinking();
@@ -158,7 +160,7 @@ static void APP_LedBlinking(void)
 {
   while (1)
   {
-    BSP_LED_Toggle(LED_GREEN);; 
+    BSP_LED_Toggle(LED_GREEN);
     HAL_Delay(500);
   }
 }

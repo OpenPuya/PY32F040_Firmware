@@ -76,7 +76,7 @@ void HAL_LCD_MspInit(LCD_HandleTypeDef *hlcd)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   
   /* Configure LCD pins */
-  GPIO_InitTypeDef GPIO_InitStructure;
+  GPIO_InitTypeDef GPIO_InitStructure = {0};
   GPIO_InitStructure.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStructure.Pull = GPIO_NOPULL;
 

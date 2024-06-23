@@ -34,14 +34,14 @@
 /* Private define ------------------------------------------------------------*/
 #define I2C_ADDRESS        0xA0             /* Own address 0xA0 */
 #define I2C_SPEEDCLOCK   100000             /* Communication speed : 100K */
-#define I2C_DUTYCYCLE    I2C_DUTYCYCLE_2    /* Duty cycle */
+#define I2C_DUTYCYCLE    I2C_DUTYCYCLE_16_9 /* Duty cycle */
 
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef I2cHandle;
 #define RX_MAX_LEN 200     /* Single frame data, maximum received data length */
 uint32_t RxLen = 0;        /* Single frame data, actual received data length */
 uint8_t RxBuffer[RX_MAX_LEN] = {0}; /* Receive buffer */
-uint8_t RevOkFlag = 0;     /* Single frame data received completion flag */
+__IO uint8_t RevOkFlag = 0;     /* Single frame data received completion flag */
 
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/

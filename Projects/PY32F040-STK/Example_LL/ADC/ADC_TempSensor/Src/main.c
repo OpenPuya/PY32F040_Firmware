@@ -95,7 +95,7 @@ int main(void)
  
     hADCxConvertedData_Temperature_DegreeCelsius =(int16_t)(Temp_k * ADCxConvertedData - Temp_k * TScal1 + TStem1);
       
-    printf("Temperature: %d",hADCxConvertedData_Temperature_DegreeCelsius);
+    printf("Temperature: %d\r\n",hADCxConvertedData_Temperature_DegreeCelsius);
     LL_mDelay(1000);
   }
 }

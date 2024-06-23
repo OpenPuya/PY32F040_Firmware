@@ -93,20 +93,12 @@ void HAL_ADC_LevelOutOfWindowCallback(ADC_HandleTypeDef* hadc)
 static void APP_AdcConfig()
 {   
   ADC_ChannelConfTypeDef   sConfig={0};  
-  RCC_PeriphCLKInitTypeDef RCC_PeriphCLKInit={0};
-  
-    /* Enable ADC clock */
-  __HAL_RCC_ADC_CLK_ENABLE();
-  
-  RCC_PeriphCLKInit.PeriphClockSelection= RCC_PERIPHCLK_ADC;
-  RCC_PeriphCLKInit.ADCClockSelection   = RCC_ADCCLKSOURCE_PCLK_DIV4;
-  HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInit);
-  
+
   AdcHandle.Instance = ADC1;
-  
+
   AdcHandle.Init.Resolution            = ADC_RESOLUTION_12B;             /* 12-bit resolution for converted data */
   AdcHandle.Init.DataAlign             = ADC_DATAALIGN_RIGHT;            /* Right-alignment for converted data */
-  AdcHandle.Init.ScanConvMode          = ADC_SCAN_ENABLE;                /* Scan mode on */
+  AdcHandle.Init.ScanConvMode          = ADC_SCAN_DISABLE;               /* Scan mode off */
   AdcHandle.Init.ContinuousConvMode    = DISABLE;                        /* Single mode */
   AdcHandle.Init.NbrOfConversion       = 1;                              /* Number of conversion channels 1 */
   AdcHandle.Init.DiscontinuousConvMode = DISABLE;                        /* Discontinuous mode not enabled */
@@ -156,7 +148,6 @@ static void APP_AdcConfig()
   */
 static void APP_TimConfig(void)
 {
-  __HAL_RCC_TIM15_CLK_ENABLE();                                       /* TIM15 clock enable */
   TimHandle.Instance = TIM15;                                         /* TIM15 */
   TimHandle.Init.Period            = 8000 - 1;                        /* Period = 8000-1 */
   TimHandle.Init.Prescaler         = 1000 - 1;                        /* Prescaler = 1000-1 */

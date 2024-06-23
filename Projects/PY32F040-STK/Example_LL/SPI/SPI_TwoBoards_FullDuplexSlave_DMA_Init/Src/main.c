@@ -37,15 +37,15 @@
 /* Transfer buffer*/
 uint8_t aTxBuffer[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 uint8_t ubNbDataToTransmit = sizeof(aTxBuffer);
-uint8_t ubTransmitIndex = 0;
+__IO uint8_t ubTransmitIndex = 0;
 
 /* Receive buffer */
 uint8_t aRxBuffer[sizeof(aTxBuffer)] = {0};
 uint8_t ubNbDataToReceive = sizeof(aTxBuffer);
-uint8_t ubReceiveIndex = 0;
+__IO uint8_t ubReceiveIndex = 0;
 
 /* A flag that data is received and sent */
-uint8_t txRxDataComplteFlag = RESET;
+__IO uint8_t txRxDataComplteFlag = RESET;
 
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/

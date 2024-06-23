@@ -43,7 +43,7 @@ uint8_t aRxBuffer[sizeof(aTxBuffer)] = {0};
 uint8_t ubNbDataToReceive = sizeof(aTxBuffer);
 
 /* A flag that data is received and sent completely */
-uint8_t txRxDataComplteFlag = RESET;
+__IO uint8_t txRxDataComplteFlag = RESET;
 
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/

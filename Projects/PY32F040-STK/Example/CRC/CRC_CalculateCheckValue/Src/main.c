@@ -84,7 +84,7 @@ int main(void)
   CrcHandle.Instance = CRC;
   if (HAL_CRC_Init(&CrcHandle) != HAL_OK)
   {
-    while (1);
+    APP_ErrorHandler();
   }
 
   /* Calculate CRC of aDataBuffer */
@@ -93,8 +93,12 @@ int main(void)
   /* Compare CRC values with expected values */
   if (uwCRCValue != uwExpectedCRCValue)
   {
-    /* If it does not match, turn off the LED */
-    BSP_LED_Off(LED_GREEN);
+    /* If it does not match, LED blink */
+    while(1)
+    {
+      BSP_LED_Toggle(LED_GREEN);
+      HAL_Delay(500);
+    }
   }
   else
   {

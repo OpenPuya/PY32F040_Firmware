@@ -83,7 +83,7 @@ int main(void)
 
     }
     LL_ADC_ClearFlag_EOS(ADC1);
-    printf("VCC: %umV",(1200*4096)/LL_ADC_REG_ReadConversionData12(ADC1));
+    printf("VCC: %umV\r\n",(1200*4096)/LL_ADC_REG_ReadConversionData12(ADC1));
     LL_mDelay(1000);
   }
 }

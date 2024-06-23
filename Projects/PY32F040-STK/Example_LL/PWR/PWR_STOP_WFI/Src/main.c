@@ -52,7 +52,7 @@ int main(void)
   LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
   
-  /* Clock initialization, configure the system clock as LSI */
+  /* Configure the system clock */
   APP_SystemClockConfig();
 
   /* Initialize LED */
@@ -67,7 +67,7 @@ int main(void)
   /* Turn on LED */
   BSP_LED_On(LED_GREEN);
 
-  /*  Wait for the button to be pressed  */
+  /* Wait for the button to be pressed */
   while (BSP_PB_GetState(BUTTON_USER))
   {
   }
@@ -95,10 +95,13 @@ int main(void)
   */
 static void APP_ExtiConfig(void)
 {
+   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+   
+   LL_EXTI_InitTypeDef EXTI_InitStruct = {0};
+ 
    /* Enable GPIOA clock */
    LL_IOP_GRP1_EnableClock (LL_IOP_GRP1_PERIPH_GPIOA);
   
-   LL_GPIO_InitTypeDef GPIO_InitStruct;
    /* Select PA06 pin */
    GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
    /* Select input mode */
@@ -111,7 +114,7 @@ static void APP_ExtiConfig(void)
    /* Select EXTI6 as external interrupt input */
    LL_EXTI_SetEXTISource(LL_EXTI_CONFIG_PORTA,LL_EXTI_CONFIG_LINE6);
 
-   LL_EXTI_InitTypeDef EXTI_InitStruct;
+
    /* Select EXTI6 */
    EXTI_InitStruct.Line = LL_EXTI_LINE_6;
    /* Enable  */

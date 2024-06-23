@@ -56,12 +56,12 @@ void HAL_COMP_MspInit(COMP_HandleTypeDef *hcomp)
   __HAL_RCC_COMP1_CLK_ENABLE();                 /* Enable COMP1 clock */
 
   /* PA0 configured as analog input */
-  GPIO_InitTypeDef COMPINPUT = {0};
-  COMPINPUT.Pin = GPIO_PIN_0;
-  COMPINPUT.Mode = GPIO_MODE_ANALOG;            /* analog Mode */
-  COMPINPUT.Speed = GPIO_SPEED_FREQ_HIGH;
-  COMPINPUT.Pull = GPIO_NOPULL;                 /* No Pull */
-  HAL_GPIO_Init(GPIOA,  &COMPINPUT);            /* GPIO initialization */
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  GPIO_InitStruct.Pin = GPIO_PIN_0;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;            /* analog Mode */
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;                 /* No Pull */
+  HAL_GPIO_Init(GPIOA,  &GPIO_InitStruct);            /* GPIO initialization */
   
   HAL_NVIC_EnableIRQ(ADC_COMP_IRQn);            /* Enable COMP interrupt */
   HAL_NVIC_SetPriority(ADC_COMP_IRQn, 1, 1);

@@ -77,6 +77,13 @@ int main(void)
   I2sHandle.Init.MCLKOutput   = I2S_MCLKOUTPUT_DISABLE;
   I2sHandle.Init.AudioFreq    = I2S_AUDIOFREQ_8K;
   I2sHandle.Init.CPOL         = I2S_CPOL_HIGH;
+  /* DeInitialize I2S peripheral */
+  if (HAL_I2S_DeInit(&I2sHandle) != HAL_OK)
+  {
+    APP_ErrorHandler();
+  }
+  
+  /* Initialize I2S peripheral */
   if (HAL_I2S_Init(&I2sHandle) != HAL_OK)
   {
     APP_ErrorHandler();

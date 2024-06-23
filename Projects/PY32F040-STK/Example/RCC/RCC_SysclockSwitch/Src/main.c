@@ -36,7 +36,7 @@
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
-static void APP_SetSysClock(uint32_t SYSCLKSource);
+static void APP_SetSysClockHSE(void);
 static void APP_SystemClockConfig(void);
 
 /**
@@ -50,15 +50,12 @@ int main(void)
   
   /* Initialize button */
   BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_GPIO);
-
-  /* Suspend SysTick interrupt */
-  HAL_SuspendTick();
   
-  /* Configure the system clock to default HSI 8MHz, and then switch to LSI clock */
+  /* Configure the system clock to HSI 16MHz */
   APP_SystemClockConfig();
 
   /* Configure PA08 pin as MCO1 function to output the system clock */
-  HAL_RCC_MCOConfig(0, RCC_MCO1SOURCE_SYSCLK, RCC_MCODIV_1);
+  HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_SYSCLK, RCC_MCODIV_1);
 
   /* Wait for the button to be pressed to enable HSE */
   while (BSP_PB_GetState(BUTTON_KEY) == 1)
@@ -66,7 +63,7 @@ int main(void)
   }
 
   /* Switch the system clock to HSE external crystal clock */
-  APP_SetSysClock(RCC_SYSCLKSOURCE_HSE);
+  APP_SetSysClockHSE();
 
   while (1)
   {
@@ -87,14 +84,14 @@ static void APP_SystemClockConfig(void)
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE | RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_LSE;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;                                                    /* Enable HSI */
   RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;                                                    /* HSI not divided */
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_8MHz;                            /* Configure HSI output clock as 8MHz */
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_16MHz;                           /* Configure HSI output clock as 16MHz */
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;                                                    /* Enable HSE */
   RCC_OscInitStruct.HSEFreq = RCC_HSE_16_32MHz;                                               /* HSE crystal frequency range 16M~32M */
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;                                                    /* Enable LSI */
+  RCC_OscInitStruct.LSIState = RCC_LSI_OFF;                                                   /* Disable LSI */
   RCC_OscInitStruct.LSEState = RCC_LSE_OFF;                                                   /* Disable LSE */
-  RCC_OscInitStruct.LSEDriver = RCC_ECSCR_LSE_DRIVER_1;                                       /* Default LSE  drive capability */
+  /*RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_MEDIUM;*/                                      /* LSE medium drive capability */
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_OFF;                                               /* Disable PLL */
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;                                        /* Select PLL source as HSE */
+  /*RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;*/                                    /* Select PLL source as HSE */
   /*RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL2;*/
   /* Initialize RCC oscillator */
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -104,7 +101,7 @@ static void APP_SystemClockConfig(void)
 
   /* Initialize CPU, AHB, and APB bus clocks */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1; /* RCC system clock types */
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_LSI;                                         /* SYSCLK source is LSI */
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSISYS;                                      /* SYSCLK source is HSISYS */
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;                                             /* AHB clock not divided */
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;                                              /* APB clock not divided */
   /* Initialize RCC system clock (FLASH_LATENCY_0=24M or below; FLASH_LATENCY_1=48M) */
@@ -115,27 +112,22 @@ static void APP_SystemClockConfig(void)
 }
 
 /**
-  * @brief   Set system clock
-  * @param   SYSCLKSource：System clock source
-  *            @arg RCC_SYSCLKSOURCE_LSI: LSI as system clock source
-  *            @arg RCC_SYSCLKSOURCE_LSE: LSE as system clock source
-  *            @arg RCC_SYSCLKSOURCE_HSE: HSE as system clock source
-  *            @arg RCC_SYSCLKSOURCE_HSISYS: HSI as system clock source
-  *            @arg RCC_SYSCLKSOURCE_PLLCLK: PLL as system clock source
+  * @brief   Set system clock to HSE
+  * @param   None
   * @retval  None
   */
-static void APP_SetSysClock(uint32_t SYSCLKSource)
+static void APP_SetSysClockHSE(void)
 {
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /* RCC system clock types */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1;
-  RCC_ClkInitStruct.SYSCLKSource = SYSCLKSource;                            /* Select system clock source */
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSE;                    /* Select system clock source */
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;                        /* AHB clock not divided */
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;                         /* APB clock divided by 2 */
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;                         /* APB clock not divided */
 
   /* Initialize RCC system clock (FLASH_LATENCY_0=24M or below; FLASH_LATENCY_1=48M) */
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
     APP_ErrorHandler();
   }

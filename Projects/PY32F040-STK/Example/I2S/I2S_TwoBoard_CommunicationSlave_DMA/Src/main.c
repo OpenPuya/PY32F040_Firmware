@@ -35,9 +35,6 @@
 /* Private variables ---------------------------------------------------------*/
 I2S_HandleTypeDef I2sHandle;
 
-DMA_HandleTypeDef HdmaCh1;
-DMA_HandleTypeDef HdmaCh2;
-
 uint16_t TxBuff[16] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
 uint16_t RxBuff[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 #define DATA_LENGTH       16
@@ -81,6 +78,13 @@ int main(void)
   I2sHandle.Init.MCLKOutput   = I2S_MCLKOUTPUT_DISABLE;
   I2sHandle.Init.AudioFreq    = I2S_AUDIOFREQ_8K;
   I2sHandle.Init.CPOL         = I2S_CPOL_HIGH;  
+  /* DeInitialize I2S peripheral */
+  if (HAL_I2S_DeInit(&I2sHandle) != HAL_OK)
+  {
+    APP_ErrorHandler();
+  }
+  
+  /* Initialize I2S peripheral */
   if (HAL_I2S_Init(&I2sHandle) != HAL_OK)
   {
     APP_ErrorHandler();

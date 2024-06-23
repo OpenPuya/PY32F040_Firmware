@@ -30,12 +30,11 @@
   
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "py32f040_hal_flash.h"
 
 /* Private define ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef    TimHandle;
-TIM_OC_InitTypeDef sConfig;
+TIM_OC_InitTypeDef   sConfig;
 uint32_t Arr_DMA[6] = {100 - 1, 6400 - 1, 1 - 1, 10 - 1, 640 - 1, 1 - 1};
 
 /* Private user code ---------------------------------------------------------*/
@@ -93,7 +92,7 @@ int main(void)
   */
 static void APP_GpioPortInit(void)
 {
-  GPIO_InitTypeDef  GPIO_InitStruct;
+  GPIO_InitTypeDef  GPIO_InitStruct = {0};
   /* Enable GPIOA clock */
   __HAL_RCC_GPIOA_CLK_ENABLE();
   

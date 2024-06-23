@@ -25,17 +25,23 @@ GCC Version: GNU Arm Embedded Toolchain 10.3-2021.10
 ================================================================================
 使用步骤：
 1. 编译并下载程序到MCU；
-2. 等待LED灯亮后，按下用户按键，LED灯关闭，进入STOP模式；
-3. RTC开始计时，每隔1s左右就会通过闹钟中断唤醒MCU，并且翻转LED。
+2. 断开swd连接线并重新上电;
+3. 等待LED灯亮后，按下用户按键，LED灯关闭，进入STOP模式；
+4. RTC开始计时，每隔1s左右就会通过闹钟中断唤醒MCU，并且翻转LED 。
 
 Example execution steps:
-1. Compile and download the program to the MCU.
-2. Wait for the LED to turn on, press the user button to turn off the LED and 
-   enter STOP mode.
-3. The RTC will start counting, and approximately every 1 second, the MCU will 
-   be awakened by the alarm interrupt and the LED will toggle.
+1.Compile and download the program to the MCU;
+2.Disconnect the SWD connection wire and power on again.
+3.Wait for the LED to turn on, press the user button to turn off the LED 
+and enter STOP mode;
+4.The RTC starts counting, and approximately every 1 second, it will wake 
+up the MCU through the alarm interrupt and toggle the LED.
 ================================================================================
 注意事项：
+1，演示此样例功能时需要断开swd连接线并重新上电，因为默认情况下，仿真器会把
+DBGMCU_CR.DBG_STOP置位。
 
 Notes:
+1.When demonstrating this sample, disconnect the SWD connection and 
+power cycle the board, as the debugger will set DBGMCU_CR.DBG_STOP by default.
 ================================================================================

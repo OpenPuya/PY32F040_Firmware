@@ -1,0 +1,39 @@
+Info : auto-selecting first available session transport "swd". To override use 'transport select <transport>'.
+Info : CMSIS-DAP: SWD supported
+Info : CMSIS-DAP: Atomic commands supported
+Info : CMSIS-DAP: FW Version = 1.10
+Info : CMSIS-DAP: Interface Initialised (SWD)
+Info : SWCLK/TCK = 1 SWDIO/TMS = 1 TDI = 0 TDO = 0 nTRST = 0 nRESET = 1
+Info : CMSIS-DAP: Interface ready
+Info : clock speed 1000 kHz
+Info : [py32f040.cpu] Cortex-M0+ r0p1 processor detected
+Info : [py32f040.cpu] target has 4 breakpoints, 2 watchpoints
+Info : starting gdb server for py32f040.cpu on 3333
+Info : Listening on port 3333 for gdb connections
+[py32f040.cpu] halted due to debug-request, current mode: Thread 
+xPSR: 0xf1000000 pc: 0x08002f98 msp: 0x20002dc0
+** Programming Started **
+Info : device id = 0x6188061
+Info : flash size = 128 KB
+Info : Padding image section 0 at 0x080040f0 with 16 bytes (bank write end alignment)
+Warn : Adding extra erase range, 0x08004100 .. 0x08005fff
+Info : Programming addr 0x08000000 success, done 1%.
+Info : Programming addr 0x08000400 success, done 7%.
+Info : Programming addr 0x08000800 success, done 13%.
+Info : Programming addr 0x08000c00 success, done 20%.
+Info : Programming addr 0x08001000 success, done 26%.
+Info : Programming addr 0x08001400 success, done 32%.
+Info : Programming addr 0x08001800 success, done 38%.
+Info : Programming addr 0x08001c00 success, done 44%.
+Info : Programming addr 0x08002000 success, done 50%.
+Info : Programming addr 0x08002400 success, done 56%.
+Info : Programming addr 0x08002800 success, done 63%.
+Info : Programming addr 0x08002c00 success, done 69%.
+Info : Programming addr 0x08003000 success, done 75%.
+Info : Programming addr 0x08003400 success, done 81%.
+Info : Programming addr 0x08003800 success, done 87%.
+Info : Programming addr 0x08003c00 success, done 93%.
+Info : Programming addr 0x08004000 success, done 100%.
+** Programming Finished **
+** Verify Started **
+** Verified OK **

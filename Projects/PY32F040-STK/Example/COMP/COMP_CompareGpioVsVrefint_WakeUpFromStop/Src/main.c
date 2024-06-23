@@ -103,11 +103,15 @@ int main(void)
   */
 static void APP_RccInit(void)
 {                    
-  RCC_OscInitTypeDef RCCCONF={0};
-  RCC_PeriphCLKInitTypeDef COMPRCC={0};
+  RCC_OscInitTypeDef RCCCONF = {0};
+  RCC_PeriphCLKInitTypeDef COMPRCC = {0};
   
   RCCCONF.OscillatorType = RCC_OSCILLATORTYPE_LSI;        /* RCC uses internal LSI */
   RCCCONF.LSIState = RCC_LSI_ON;                          /* Enable LSI */
+  RCCCONF.PLL.PLLState = RCC_PLL_NONE;                    /* PLL configuration unchanged */
+  /*RCCCONF.PLL.PLLSource = RCC_PLLSOURCE_HSI;*/
+  /*RCCCONF.PLL.PLLMUL = RCC_PLL_MUL2;*/
+
   HAL_RCC_OscConfig(&RCCCONF);                            /* Clock initialization */
     
   HAL_RCCEx_EnableLSCO(RCC_LSCOSOURCE_LSI);               /* LSC Select LSI */
@@ -134,6 +138,7 @@ static void APP_CompInit(void)
   hcomp1.Init.Hysteresis      = COMP_HYSTERESIS_DISABLE;                /* Hysteresis function off */
   hcomp1.Init.WindowMode      = COMP_WINDOWMODE_DISABLE;                /* Window Mode Off */
   hcomp1.Init.TriggerMode     = COMP_TRIGGERMODE_IT_RISING;             /* The triggering method for closing window mode is the rising edge interrupt triggering */
+  hcomp1.Init.DigitalFilter   = 0;                                      /* Disable DigitalFilter */
   hcomp1.Init.VrefDiv         = COMP_VREF_DIV_32_64VREF;                /* Vrefcmp div 32/64 */
   hcomp1.Init.VrefSrc         = COMP_VREF_SRC_VCCA;                     /* Vref select VCCA */
   

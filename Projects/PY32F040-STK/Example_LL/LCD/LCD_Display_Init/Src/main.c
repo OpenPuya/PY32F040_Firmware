@@ -152,7 +152,7 @@ static void APP_ConfigLcdClock(void)
   */
 static void APP_ConfigLcdPin(void)
 {
-  LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   
   /* Enable LCD pin clocks */
   LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOA);

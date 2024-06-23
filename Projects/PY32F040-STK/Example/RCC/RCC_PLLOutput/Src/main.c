@@ -82,10 +82,10 @@ static void APP_SystemClockConfig(void)
   RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;                                                    /* HSI not divided */
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_16MHz;                           /* Configure HSI output clock as 16MHz */
   RCC_OscInitStruct.HSEState = RCC_HSE_OFF;                                                   /* Disable HSE */
-  RCC_OscInitStruct.HSEFreq = RCC_HSE_16_32MHz;                                               /* HSE crystal frequency range 16M~32M */
+  /*RCC_OscInitStruct.HSEFreq = RCC_HSE_16_32MHz;*/                                               /* HSE crystal frequency range 16M~32M */
   RCC_OscInitStruct.LSIState = RCC_LSI_OFF;                                                   /* Disable LSI */
   RCC_OscInitStruct.LSEState = RCC_LSE_OFF;                                                   /* Disable LSE */
-  RCC_OscInitStruct.LSEDriver = RCC_ECSCR_LSE_DRIVER_1;                                       /* Default LSE  drive capability */
+  /*RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_MEDIUM;*/                                      /* LSE medium drive capability */
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;                                                /* Enable PLL */
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;                                        /* Select PLL source as HSI */
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL2;                                                /* PLL multiplication factor set to 2 (output frequency is doubled) */

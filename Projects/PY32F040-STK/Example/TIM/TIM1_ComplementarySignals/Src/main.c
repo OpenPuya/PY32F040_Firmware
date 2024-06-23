@@ -32,16 +32,15 @@
 #include "main.h"
 
 /* Private define ------------------------------------------------------------*/
-#define  PERIOD_VALUE       (uint32_t)(700 - 1)               /* Period Value  */
+#define  PERIOD_VALUE       (uint32_t)(800 - 1)               /* Period Value  */
 #define  PULSE1_VALUE       (uint32_t)(PERIOD_VALUE/2)        /* Capture Compare 1 Value  */
 #define  PULSE2_VALUE       (uint32_t)(PERIOD_VALUE*37.5/100) /* Capture Compare 2 Value  */
 #define  PULSE3_VALUE       (uint32_t)(PERIOD_VALUE/4)        /* Capture Compare 3 Value  */
 
 /* Private variables ---------------------------------------------------------*/
-TIM_HandleTypeDef    TimHandle;
+TIM_HandleTypeDef               TimHandle;
 TIM_OC_InitTypeDef              sPWMConfig;
-TIM_BreakDeadTimeConfigTypeDef sBreakConfig;
-uint32_t uwPrescalerValue = 0;
+TIM_BreakDeadTimeConfigTypeDef  sBreakConfig;
 
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/

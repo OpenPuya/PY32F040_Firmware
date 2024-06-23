@@ -36,11 +36,11 @@
 /* Private variables ---------------------------------------------------------*/
 uint8_t RxBuf[RX_MAX_LEN] = {0}; /* Receive buffer */
 uint32_t RxLen = 0;     /* Single frame data, actual received data length */
-uint32_t CheckFlag = 0; /* After the hardware detects an idle frame, the
-                           "End of single frame data reception" check flag */
-uint32_t CheckLen = 0;  /* Used to determine whether new data has arrived within
-                           the timeout period */
-uint32_t timeout = RX_TIMEOUT; /* Used for timeout judgment */
+__IO uint32_t CheckFlag = 0; /* After the hardware detects an idle frame, the
+                                "End of single frame data reception" check flag */
+__IO uint32_t CheckLen = 0;  /* Used to determine whether new data has arrived within
+                                the timeout period */
+__IO uint32_t timeout = RX_TIMEOUT; /* Used for timeout judgment */
 
 uint8_t *TxBuff = NULL;
 __IO uint16_t TxSize = 0;
@@ -123,7 +123,7 @@ static void APP_ConfigUsart(void)
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART2);
   
   /* GPIOA configuration */
-  LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* Select pin 2 */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_2;
   /* Select alternate function mode */
@@ -152,7 +152,7 @@ static void APP_ConfigUsart(void)
   NVIC_EnableIRQ(USART2_IRQn);
   
   /* Set USART feature */
-  LL_USART_InitTypeDef USART_InitStruct;
+  LL_USART_InitTypeDef USART_InitStruct = {0};
   /* Set baud rate */
   USART_InitStruct.BaudRate = 9600;
   /* set word length to 8 bits: Start bit, 8 data bits, n stop bits */

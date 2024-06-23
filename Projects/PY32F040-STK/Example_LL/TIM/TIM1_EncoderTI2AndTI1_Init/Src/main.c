@@ -83,9 +83,11 @@ static void APP_ConfigTIM1Encoder(void)
   LL_TIM_ENCODER_InitTypeDef TIM1EncoderInit = {0};
   LL_GPIO_InitTypeDef TIM1ChannelInit = {0};
 
-  TIM1CountInit.Prescaler           = 1-1;    /* No prescaler */
-  TIM1CountInit.Autoreload          = 1000-1; /* Autoreload value：1000 */
-  TIM1CountInit.RepetitionCounter   = 0;      /* RepetitionCounter value：0 */
+  TIM1CountInit.Prescaler           = 1-1;                        /* No prescaler */
+  TIM1CountInit.Autoreload          = 1000-1;                     /* Autoreload value：1000 */
+  TIM1CountInit.RepetitionCounter   = 0;                          /* RepetitionCounter value：0 */
+  TIM1CountInit.ClockDivision       = LL_TIM_CLOCKDIVISION_DIV1;  /* Clock no divider */
+  TIM1CountInit.CounterMode         = LL_TIM_COUNTERMODE_UP;      /* Count mode:up */
   
   /* Initialize TIM1 */
   LL_TIM_Init(TIM1,&TIM1CountInit);
@@ -93,6 +95,8 @@ static void APP_ConfigTIM1Encoder(void)
   /* Enable CH1 and CH2 capture interrupts */
   LL_TIM_EnableIT_CC1(TIM1);
   LL_TIM_EnableIT_CC2(TIM1);
+
+  NVIC_SetPriority(TIM1_CC_IRQn, 1);
   NVIC_EnableIRQ(TIM1_CC_IRQn);
   
   /* Configure Encoder */
@@ -112,9 +116,12 @@ static void APP_ConfigTIM1Encoder(void)
   LL_TIM_ENCODER_Init(TIM1,&TIM1EncoderInit);
   
   /* Map TI1 and TI2 to PA8 and PA9 */
-  TIM1ChannelInit.Pin       = LL_GPIO_PIN_8 | LL_GPIO_PIN_9;
-  TIM1ChannelInit.Mode      = LL_GPIO_MODE_ALTERNATE;
-  TIM1ChannelInit.Alternate = LL_GPIO_AF_2;
+  TIM1ChannelInit.Pin        = LL_GPIO_PIN_8 | LL_GPIO_PIN_9;
+  TIM1ChannelInit.Mode       = LL_GPIO_MODE_ALTERNATE;
+  TIM1ChannelInit.Alternate  = LL_GPIO_AF_2;
+  TIM1ChannelInit.Speed      = LL_GPIO_SPEED_FREQ_HIGH;
+  TIM1ChannelInit.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  TIM1ChannelInit.Pull       = LL_GPIO_PULL_UP;
   LL_GPIO_Init(GPIOA,&TIM1ChannelInit);
   
   /* Enable TIM1 */

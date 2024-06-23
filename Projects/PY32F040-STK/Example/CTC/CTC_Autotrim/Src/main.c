@@ -48,6 +48,9 @@ int main(void)
   /* Reset of all peripherals, Initializes the Systick. */
   HAL_Init();
   
+  /* Initialize LED */
+  BSP_LED_Init(LED_GREEN);
+  
   /* Configure PA08 pin as MCO function, output PLL */
   HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_PLLCLK, RCC_MCODIV_1);
   
@@ -68,11 +71,21 @@ int main(void)
   HAL_CTC_Init(&CTChadle);
   
   /* Start calibration */
-  HAL_CTC_Start_IT(&CTChadle);
+  HAL_CTC_Start(&CTChadle);
 
   /* infinite loop */
   while (1)
   {
+    if (__HAL_CTC_GET_FLAG(&CTChadle, CTC_FLAG_CKOK) != 0)
+    {
+      /* Calibration successful, LED light on */
+      BSP_LED_On(LED_GREEN);
+    }
+    else
+    {
+      /* Calibration not successful, LED light in off state */
+      BSP_LED_Off(LED_GREEN);
+    }
   }
 }
 
@@ -88,13 +101,13 @@ static void APP_SystemClockConfig(void)
 
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_HSE | RCC_OSCILLATORTYPE_LSE;  /* Select RCC oscillator HSE, HSI, LSE */
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;                                                     /* Enable HSI */
-  RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;                                                     /* 4 division frequency */
+  RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;                                                     /* 1 division frequency */
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_16MHz;                            /* Configure the HSI output clock to 16MHz */
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;                                                     /* Start HSE */
   RCC_OscInitStruct.HSEFreq = RCC_HSE_16_32MHz;                                                /* HSE crystal oscillator operating frequency 16M~32M */
-  RCC_OscInitStruct.LSIState = RCC_LSI_OFF;                                                    /* Close LSI */
+  /*RCC_OscInitStruct.LSIState = RCC_LSI_OFF;*/                                                /* Close LSI */
   RCC_OscInitStruct.LSEState = RCC_LSE_ON;                                                     /* Enable LSE */
-  RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_HIGH;                                             /* LSE default driver capability */
+  RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_HIGH;                                             /* LSE high driver capability */
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;                                                 /* Enable PLL */
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;                                         /* Select PLL source as HSI */
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL3;                                                 /* PLL triple frequency */

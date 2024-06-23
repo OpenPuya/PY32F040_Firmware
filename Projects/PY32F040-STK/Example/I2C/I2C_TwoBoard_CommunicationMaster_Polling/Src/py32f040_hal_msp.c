@@ -55,8 +55,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-  __HAL_RCC_SYSCFG_CLK_ENABLE();                              /* Enable SYSCFG clock */
-  __HAL_RCC_DMA_CLK_ENABLE();                                 /* Enable DMA clock */
   __HAL_RCC_I2C1_CLK_ENABLE();                                /* Enable I2C1 clock */
   __HAL_RCC_GPIOB_CLK_ENABLE();                               /* Enable GPIOB clock */
 

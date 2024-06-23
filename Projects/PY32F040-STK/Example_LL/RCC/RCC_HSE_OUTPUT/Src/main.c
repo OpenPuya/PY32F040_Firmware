@@ -45,7 +45,7 @@ static void APP_GPIOConfig(void);
   */
 int main(void)
 {
-  /* Clock initialization, configure the system clock as LSE */
+  /* Clock initialization, configure the system clock as HSE */
   APP_SystemClockConfig();
 
   /* Configure PA08 for MCO alternate function */
@@ -84,6 +84,8 @@ static void APP_SystemClockConfig(void)
 
   /* Configure APB1 prescaler and initialize */
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
+  LL_Init1msTick(HSE_VALUE);
+  
   /* Update system clock global variable SystemCoreClock (can also be updated by calling SystemCoreClockUpdate function) */
   LL_SetSystemCoreClock(HSE_VALUE);
 }
@@ -95,7 +97,7 @@ static void APP_SystemClockConfig(void)
   */
 static void APP_GPIOConfig(void)
 {
-  LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   
   /* Enable GPIOA clock */
   LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOA);

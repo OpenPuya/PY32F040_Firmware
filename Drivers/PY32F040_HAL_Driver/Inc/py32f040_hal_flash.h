@@ -141,9 +141,9 @@ typedef struct
 /** @defgroup FLASH_Type_Erase FLASH erase type
   * @{
   */
-#define FLASH_TYPEERASE_MASSERASE       (0x01U)  /*!<Flash mass erase activation*/
-#define FLASH_TYPEERASE_PAGEERASE       (0x02U)  /*!<Flash Pages erase activation*/
-#define FLASH_TYPEERASE_SECTORERASE     (0x03U)
+#define FLASH_TYPEERASE_MASSERASE       (FLASH_CR_MER)  /*!<Flash mass erase activation*/
+#define FLASH_TYPEERASE_PAGEERASE       (FLASH_CR_PER)  /*!<Flash Pages erase activation*/
+#define FLASH_TYPEERASE_SECTORERASE     (FLASH_CR_SER)
 /**
   * @}
   */
@@ -264,7 +264,7 @@ typedef struct
 /** @defgroup FLASH_Type_Program FLASH type program
   * @{
   */
-#define FLASH_TYPEPROGRAM_PAGE       (0x01U)  /*!<Program 128bytes at a specified address.*/
+#define FLASH_TYPEPROGRAM_PAGE       (FLASH_CR_PG)  /*!<Program 128bytes at a specified address.*/
 /**
   * @}
   */

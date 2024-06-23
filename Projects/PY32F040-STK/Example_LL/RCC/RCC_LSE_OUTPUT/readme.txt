@@ -3,11 +3,11 @@
                              Sample Description
 ================================================================================
 功能描述：
-此样例演示了时钟输出功能，可输出LSE波形。
+此样例演示了将系统时钟设置为LSE，并通过MCO引脚输出系统时钟。
 
 Function descriptions:
-This sample demonstrates the clock output feature that can output the LSE 
-waveform.
+This example demonstrates setting the system clock to LSE and outputting the
+system clock through the MCO pin.
 ================================================================================
 测试环境：
 测试用板：PY32F040_STK

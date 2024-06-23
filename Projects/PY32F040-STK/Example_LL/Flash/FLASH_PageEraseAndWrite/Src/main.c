@@ -125,7 +125,7 @@ int main(void)
 static void APP_FlashErase(void)
 {
   uint32_t PAGEError = 0;
-  FLASH_EraseInitTypeDef EraseInitStruct;
+  FLASH_EraseInitTypeDef EraseInitStruct = {0};
 
   EraseInitStruct.TypeErase   = FLASH_TYPEERASE_PAGEERASE;        /* Erase type FLASH_TYPEERASE_PAGEERASE=Page erase, FLASH_TYPEERASE_SECTORERASE=Sector Erase */
   EraseInitStruct.PageAddress = FLASH_USER_START_ADDR;            /* Erase Start Address */

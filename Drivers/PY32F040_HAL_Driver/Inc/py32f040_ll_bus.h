@@ -150,11 +150,9 @@ extern "C" {
 #endif
 
 #define LL_APB1_GRP1_PERIPH_PWR            RCC_APBENR1_PWREN
-
 #if defined(DAC1)
 #define LL_APB1_GRP1_PERIPH_DAC1           RCC_APBENR1_DACEN
 #endif
-
 #define LL_APB1_GRP1_PERIPH_OPA            RCC_APBENR1_OPAEN
 #define LL_APB1_GRP1_PERIPH_LPTIM1         RCC_APBENR1_LPTIMEN
 

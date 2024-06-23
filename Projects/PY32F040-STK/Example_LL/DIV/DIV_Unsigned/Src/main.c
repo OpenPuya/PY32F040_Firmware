@@ -87,7 +87,7 @@ int main(void)
   Remainder = LL_DIV_GetRemainder(DIV);
 
   /* Print quotient and remainder */
-  printf("Quotient:%u\r\nRemainder:%u\r\n",(unsigned int)Quotient, (unsigned int)Remainder);
+  printf("Quotient:%u\r\nRemainder:%u\r\n",(unsigned int)Quotient,(unsigned int)Remainder);
 
   while (1)
   {

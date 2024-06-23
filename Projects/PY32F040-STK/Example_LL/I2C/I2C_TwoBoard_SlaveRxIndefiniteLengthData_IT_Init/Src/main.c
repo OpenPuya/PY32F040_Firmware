@@ -40,7 +40,7 @@
 #define RX_MAX_LEN 200     /* Single frame data, maximum received data length */
 uint32_t RxLen = 0;        /* Single frame data, actual received data length */
 uint8_t RxBuffer[RX_MAX_LEN] = {0}; /* Receive buffer */
-uint8_t RevOkFlag = 0;     /* Single frame data received completion flag */
+__IO uint8_t RevOkFlag = 0;     /* Single frame data received completion flag */
 
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -156,7 +156,7 @@ static void APP_ConfigI2cSlave(void)
   NVIC_EnableIRQ(I2C1_IRQn);
   
   /* I2C initialization */
-  LL_I2C_InitTypeDef I2C_InitStruct;
+  LL_I2C_InitTypeDef I2C_InitStruct = {0};
   I2C_InitStruct.PeripheralMode  = LL_I2C_MODE_I2C;
   I2C_InitStruct.ClockSpeed      = I2C_SPEEDCLOCK;
   I2C_InitStruct.DutyCycle       = LL_I2C_DUTYCYCLE_16_9;

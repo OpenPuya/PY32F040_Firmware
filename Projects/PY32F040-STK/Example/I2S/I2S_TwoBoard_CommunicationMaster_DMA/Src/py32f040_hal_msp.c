@@ -36,6 +36,9 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+static DMA_HandleTypeDef HdmaCh1;
+static DMA_HandleTypeDef HdmaCh2;
+
 /* Private function prototypes -----------------------------------------------*/
 /* External functions --------------------------------------------------------*/
 
@@ -55,7 +58,7 @@ void HAL_MspInit(void)
   */
 void HAL_I2S_MspInit(I2S_HandleTypeDef *hi2s)
 {
-  GPIO_InitTypeDef  GPIO_InitStruct;
+  GPIO_InitTypeDef  GPIO_InitStruct = {0};
   
   /* Enable clock */
   __HAL_RCC_SPI2_CLK_ENABLE();
@@ -131,6 +134,13 @@ void HAL_I2S_MspDeInit(I2S_HandleTypeDef *hi2s)
 
   /* Disable peripheral and GPIO clocks */
   HAL_GPIO_DeInit(GPIOB, GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_15);
+
+  HAL_NVIC_DisableIRQ(SPI2_IRQn);
+
+  HAL_DMA_DeInit(&HdmaCh1);
+  HAL_NVIC_DisableIRQ(DMA1_Channel1_IRQn);
+  HAL_DMA_DeInit(&HdmaCh2);
+  HAL_NVIC_DisableIRQ(DMA1_Channel2_3_IRQn);
 }
 
 /************************ (C) COPYRIGHT Puya *****END OF FILE******************/

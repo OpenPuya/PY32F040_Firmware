@@ -57,7 +57,7 @@ void HAL_MspInit(void)
 void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-
+  
   __HAL_RCC_SYSCFG_CLK_ENABLE();                              /* Enable SYSCFG clock */
   __HAL_RCC_DMA_CLK_ENABLE();                                 /* Enable DMA clock */
   __HAL_RCC_I2C1_CLK_ENABLE();                                /* Enable I2C1 clock */
@@ -96,7 +96,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c)
   __HAL_LINKDMA(hi2c, hdmatx, HdmaCh1);                       /* Link DMA1 with IIC_TX */
 
   /* Configure DMA handle for reception */
-  HdmaCh2.Instance                 = DMA1_Channel2;           /* Select DMA channel 1 */
+  HdmaCh2.Instance                 = DMA1_Channel2;           /* Select DMA channel 2 */
   HdmaCh2.Init.Direction           = DMA_PERIPH_TO_MEMORY;    /* Direction : peripheral to memory */
   HdmaCh2.Init.PeriphInc           = DMA_PINC_DISABLE;        /* Disable peripheral address increment */
   HdmaCh2.Init.MemInc              = DMA_MINC_ENABLE;         /* Enable memory address increment */
@@ -105,7 +105,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c)
   HdmaCh2.Init.Mode                = DMA_NORMAL;              /* Disable circular mode */
   HdmaCh2.Init.Priority            = DMA_PRIORITY_HIGH;       /* Channel priority is high */
 
-  HAL_DMA_Init(&HdmaCh2);                                     /* Initialize DMA channel 1 */
+  HAL_DMA_Init(&HdmaCh2);                                     /* Initialize DMA channel 2 */
   __HAL_LINKDMA(hi2c, hdmarx, HdmaCh2);                       /* Link DMA1 with IIC_RX */
   
   /* DMA configuration for request mapping */

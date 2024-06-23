@@ -56,7 +56,7 @@ void HAL_MspInit(void)
   */
 void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
 {
-  GPIO_InitTypeDef  GPIO_InitStruct;
+  GPIO_InitTypeDef  GPIO_InitStruct = {0};
   /* Initialize SPI1 */
   if (hspi->Instance == SPI1)
   {
@@ -67,10 +67,10 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
     __HAL_RCC_DMA_CLK_ENABLE();                     /* Enable DMA clock */
     
     /*
-      PB3-SCK  (AF3)
-      PB4-MISO(AF3)
-      PB5-MOSI(AF3)
-      PA15-NSS(AF3)
+      PB3-SCK (AF0)
+      PB4-MISO(AF0)
+      PB5-MOSI(AF0)
+      PA15-NSS(AF0)
     */
     /*SCK*/
     GPIO_InitStruct.Pin       = GPIO_PIN_3;
@@ -181,6 +181,8 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef *hspi)
 
     HAL_DMA_DeInit(&HdmaCh1);
     HAL_NVIC_DisableIRQ(DMA1_Channel1_IRQn);
+    HAL_DMA_DeInit(&HdmaCh2);
+    HAL_NVIC_DisableIRQ(DMA1_Channel2_3_IRQn);
 
   }
 }

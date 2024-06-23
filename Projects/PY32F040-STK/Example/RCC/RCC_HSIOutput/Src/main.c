@@ -77,8 +77,10 @@ static void APP_SystemClockConfig(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_4MHz;                               /* Configure HSI output clock as 4MHz */
   RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;                                                       /* HSI not divided */
   RCC_OscInitStruct.HSEState = RCC_HSE_OFF;                                                      /* Disable HSE */
+  /*RCC_OscInitStruct.HSEFreq = RCC_HSE_16_32MHz;*/
   RCC_OscInitStruct.LSIState = RCC_LSI_OFF;                                                      /* Disable LSI */
   RCC_OscInitStruct.LSEState = RCC_LSE_OFF;                                                      /* Disable LSE */
+  /*RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_MEDIUM;*/
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_OFF;                                                  /* Disable PLL */
   /*RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_NONE;*/
   /*RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL2;*/

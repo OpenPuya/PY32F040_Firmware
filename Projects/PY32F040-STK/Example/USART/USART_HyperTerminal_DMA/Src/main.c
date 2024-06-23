@@ -33,17 +33,14 @@
 #include "main.h"
 
 /* Private define ------------------------------------------------------------*/
-#ifdef __GNUC__
-  /* With GCC, small printf (option LD Linker->Libraries->Small printf
-  set to 'Yes') calls __io_putchar() */
-  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif /* __GNUC__ */
+#define COUNTOF(__BUFFER__)   (sizeof(__BUFFER__) / sizeof(*(__BUFFER__)))
+#define TXSTARTMESSAGESIZE    (COUNTOF(aTxStartMessage) - 1)
+#define TXENDMESSAGESIZE      (COUNTOF(aTxEndMessage) - 1)
 
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef UartHandle;
-uint8_t aTxBuffer[12] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+uint8_t aTxStartMessage[] = "\r\n UART Hyperterminal communication based on DMA\r\n Enter 12 characters using keyboard :\r\n";
+uint8_t aTxEndMessage[] = "\r\n Example Finished\r\n";
 uint8_t aRxBuffer[12] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
 
 /* Private user code ---------------------------------------------------------*/
@@ -59,6 +56,9 @@ int main(void)
   /* Reset of all peripherals, Initializes the Systick */
   HAL_Init();
   
+  /* Configure LED */
+  BSP_LED_Init(LED_GREEN);
+  
   /* Initialize USART2 */
   UartHandle.Instance          = USART2;
   UartHandle.Init.BaudRate     = 115200;
@@ -67,29 +67,60 @@ int main(void)
   UartHandle.Init.Parity       = UART_PARITY_NONE;
   UartHandle.Init.HwFlowCtl    = UART_HWCONTROL_NONE;
   UartHandle.Init.Mode         = UART_MODE_TX_RX;
+  UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
+  UartHandle.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
   HAL_UART_Init(&UartHandle);
+
+  /* Start the transmission process */
+  if(HAL_UART_Transmit_DMA(&UartHandle, (uint8_t*)aTxStartMessage, TXSTARTMESSAGESIZE)!= HAL_OK)
+  {
+    /* Transfer error in transmission process */
+    APP_ErrorHandler();
+  }
+
+  /* Put UART peripheral in reception process */
+  if (HAL_UART_Receive_DMA(&UartHandle, (uint8_t *)aRxBuffer, 12) != HAL_OK)
+  {
+    /* Transfer error in reception process */
+    APP_ErrorHandler();
+  }
+
+  /* Wait for the end of the transfer */
+  while (HAL_UART_GetState(&UartHandle) != HAL_UART_STATE_READY)
+  {
+  }
+
+  /* Send the received Buffer */
+  if (HAL_UART_Transmit_DMA(&UartHandle, (uint8_t *)aRxBuffer, 12) != HAL_OK)
+  {
+    /* Transfer error in transmission process */
+    APP_ErrorHandler();
+  }
+
+  /* Wait for the end of the transfer */
+  while (HAL_UART_GetState(&UartHandle) != HAL_UART_STATE_READY)
+  {
+  }
+
+  /* Send the End Message */
+  if(HAL_UART_Transmit_DMA(&UartHandle, (uint8_t*)aTxEndMessage, TXENDMESSAGESIZE)!= HAL_OK)
+  {
+    /* Transfer error in transmission process */
+    APP_ErrorHandler();
+  }
+
+  /* Wait for the end of the transfer */
+  while (HAL_UART_GetState(&UartHandle) != HAL_UART_STATE_READY)
+  {
+  }
+
+  /* Turn on LED if test passes then enter infinite loop */
+  BSP_LED_On(LED_GREEN);
   
+  /* Infinite loop */
   while (1)
   {
-    /* Receives an amount of data in DMA mode. */
-    if (HAL_UART_Receive_DMA(&UartHandle, (uint8_t *)aRxBuffer, 12) != HAL_OK)
-    {
-      APP_ErrorHandler();
-    }
-    /* Wait for receiving data to be completed */
-    while(HAL_UART_GetState(&UartHandle) != HAL_UART_STATE_READY)
-    {
-    }
 
-    /* Sends an amount of data in DMA mode */
-    if (HAL_UART_Transmit_DMA(&UartHandle, (uint8_t *)aRxBuffer, 12) != HAL_OK)
-    {
-      APP_ErrorHandler();
-    }
-    /* Wait for sending data to be completed */
-    while(HAL_UART_GetState(&UartHandle) != HAL_UART_STATE_READY)
-    {
-    }
   }
 }
 

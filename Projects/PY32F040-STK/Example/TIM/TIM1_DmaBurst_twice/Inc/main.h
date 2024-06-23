@@ -44,7 +44,6 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 /* Exported variables prototypes ---------------------------------------------*/
-extern uint32_t Arr_DMA[6];
 extern TIM_HandleTypeDef    TimHandle;
 
 /* Exported functions prototypes ---------------------------------------------*/

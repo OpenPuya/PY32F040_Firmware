@@ -32,10 +32,12 @@
 
 /* Private define ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+IWDG_HandleTypeDef   IwdgHandle = {0};
+
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
-
+static void APP_SystemClockConfig(void);
 
 /**
   * @brief  Main program.
@@ -43,17 +45,18 @@
   */
 int main(void)
 {
-  IWDG_HandleTypeDef   IwdgHandle;
-
   /* Reset of all peripherals, Initializes the Systick. */
   HAL_Init();
 
+  /* System clock configuration */
+  APP_SystemClockConfig();
+  
   /* Initialize LED */
   BSP_LED_Init(LED_GREEN);
 
   IwdgHandle.Instance = IWDG;                     /* Select IWDG */
   IwdgHandle.Init.Prescaler = IWDG_PRESCALER_32;  /* Configure prescaler as 32 */
-  IwdgHandle.Init.Reload = (1000);                /* IWDG counter reload value is 1000, 1s */
+  IwdgHandle.Init.Reload = (1024);                /* IWDG counter reload value is 1024, 1s */
   /* Initialize IWDG */
   if (HAL_IWDG_Init(&IwdgHandle) != HAL_OK)       
   {
@@ -73,6 +76,28 @@ int main(void)
     {
       APP_ErrorHandler();
     }
+  }
+}
+
+/**
+  * @brief  System clock configuration function
+  * @param  None
+  * @retval None
+  */
+static void APP_SystemClockConfig(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+
+  /* Oscillator configuration */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI ;       /* Select oscillator LSI */
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;                          /* Enable LSI */
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;                    /* PLL configuration unchanged */
+  /*RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;*/
+  /*RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL2;*/
+  /* Configure oscillator */
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    APP_ErrorHandler();
   }
 }
 

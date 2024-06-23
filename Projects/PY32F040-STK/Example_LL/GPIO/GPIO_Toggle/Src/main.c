@@ -33,6 +33,10 @@
 #include "py32f040xx_ll_Start_Kit.h"
 
 /* Private define ------------------------------------------------------------*/
+#define LED_GPIO_PIN                 LED3_PIN
+#define LED_GPIO_PORT                LED3_GPIO_PORT
+#define LED_GPIO_CLK_ENABLE()        LED3_GPIO_CLK_ENABLE()
+
 /* Private variables ---------------------------------------------------------*/
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -58,34 +62,34 @@ int main(void)
   APP_GpioConfig();
 
   /* LED off */
-  LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_2);
+  LL_GPIO_SetOutputPin(LED_GPIO_PORT, LED_GPIO_PIN);
 
   while (1)
   {
     /* LED flashing */
     LL_mDelay(100);
-    LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_2);
+    LL_GPIO_TogglePin(LED_GPIO_PORT, LED_GPIO_PIN);
   }
 }
 
 /**
-  * @brief  GPIO configuration program
+  * @brief  GPIO configuration
   * @param  None
   * @retval None
   */
 static void APP_GpioConfig(void)
 {
-  /* Enable GPIOB clock */
-  LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOB);
+  /* Enable GPIO clock */
+  LED_GPIO_CLK_ENABLE();
 
-  /* Configure PB2 in output mode */
-  LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_2, LL_GPIO_MODE_OUTPUT);
+  /* Configure LED in output mode */
+  LL_GPIO_SetPinMode(LED_GPIO_PORT, LED_GPIO_PIN, LL_GPIO_MODE_OUTPUT);
   /* Default output type (after reset) is push-pull */
-  /* LL_GPIO_SetPinOutputType(GPIOB, LL_GPIO_PIN_2, LL_GPIO_OUTPUT_PUSHPULL); */
+  /* LL_GPIO_SetPinOutputType(LED_GPIO_PORT, LED_GPIO_PIN, LL_GPIO_OUTPUT_PUSHPULL); */
   /* Configure GPIO speed in low speed */
-  /* LL_GPIO_SetPinSpeed(GPIOB, LL_GPIO_PIN_2, LL_GPIO_SPEED_FREQ_LOW); */
+  /* LL_GPIO_SetPinSpeed(LED_GPIO_PORT, LED_GPIO_PIN, LL_GPIO_SPEED_FREQ_LOW); */
   /* Default (after reset) is no pull */
-  /* LL_GPIO_SetPinPull(GPIOB, LL_GPIO_PIN_2, LL_GPIO_PULL_NO); */
+  /* LL_GPIO_SetPinPull(LED_GPIO_PORT, LED_GPIO_PIN, LL_GPIO_PULL_NO); */
 }
 
 /**

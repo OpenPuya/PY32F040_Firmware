@@ -35,12 +35,10 @@
 /* Private variables ---------------------------------------------------------*/
 OPA_HandleTypeDef OpaHandle;
 
-
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 static void APP_SystemClockConfig(void);
-static void APP_GpioConfig(void);
 
 /**
   * @brief  Main program.
@@ -53,10 +51,7 @@ int main(void)
   
   /* System clock configuration */
   APP_SystemClockConfig(); 
-  
-  /* GPIO configuration */
-  APP_GpioConfig();
-  
+   
   /* Enable OPA clock */
   __HAL_RCC_OPA_CLK_ENABLE();
 
@@ -73,37 +68,6 @@ int main(void)
   {
     
   }
-}
-
-/**
-  * @brief  GPIO configuration
-  * @param  None
-  * @retval None
-  */
-static void APP_GpioConfig(void)
-{
-  GPIO_InitTypeDef  GPIO_InitStruct = {0};
-  
-  /* Enable GPIOA clock */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-
-  /* OPA2 output */
-  GPIO_InitStruct.Pin = GPIO_PIN_5;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-  
-  /* OPA2 negative terminal input */
-  GPIO_InitStruct.Pin = GPIO_PIN_6;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-  
-  /* OPA2 positive terminal input */
-  GPIO_InitStruct.Pin = GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);  
 }
 
 /**

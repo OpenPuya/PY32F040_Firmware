@@ -108,7 +108,7 @@ void USART2_IRQHandler(void)
     __HAL_UART_CLEAR_IDLEFLAG(&UartHandle);
     
     CheckFlag = 1;             /* Received an idle frame and enabled the check to
-                                  see if it is a single frame data receiving end� */
+                                  see if it is a single frame data receiving end */
     CheckLen = RxLen;          /* Obtain the length of received single frame data */
     TickStart = HAL_GetTick(); /* Record the current time (for timeout judgment) */
   }

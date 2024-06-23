@@ -33,8 +33,6 @@
 #include "py32f040_it.h"
 
 /* Private includes ----------------------------------------------------------*/
-extern TIM_HandleTypeDef    TimHandle;
-
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -91,13 +89,5 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file.                                          */
 /******************************************************************************/
-
-/**
-  * @brief This function handles TIM1 Interrupt .
-  */
-void TIM1_BRK_UP_TRG_COM_IRQHandler(void)
-{
-  HAL_TIM_IRQHandler(&TimHandle);
-}
 
 /************************ (C) COPYRIGHT Puya *****END OF FILE******************/

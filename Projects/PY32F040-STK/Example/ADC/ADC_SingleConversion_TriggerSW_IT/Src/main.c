@@ -35,8 +35,6 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef        AdcHandle;
 uint16_t                 aADCxConvertedData;
-TIM_HandleTypeDef        TimHandle;
-TIM_MasterConfigTypeDef  sMasterConfig;
 
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -80,8 +78,8 @@ int main(void)
   */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
-  aADCxConvertedData = hadc->Instance->DR;
-  printf("Channel4 : %u\n\r", (unsigned int)aADCxConvertedData);
+  aADCxConvertedData = HAL_ADC_GetValue(hadc);
+  printf("Channel4 : %u\r\n", (unsigned int)aADCxConvertedData);
 }
 
 /**
@@ -92,15 +90,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 static void APP_AdcConfig()
 {   
   ADC_ChannelConfTypeDef   sConfig={0};  
-  RCC_PeriphCLKInitTypeDef RCC_PeriphCLKInit={0};
-  
-    /* Enable ADC clock */
-  __HAL_RCC_ADC_CLK_ENABLE();
-  
-  RCC_PeriphCLKInit.PeriphClockSelection= RCC_PERIPHCLK_ADC;
-  RCC_PeriphCLKInit.ADCClockSelection   = RCC_ADCCLKSOURCE_PCLK_DIV4;
-  HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInit);
-  
+
   AdcHandle.Instance = ADC1;
   
   AdcHandle.Init.Resolution            = ADC_RESOLUTION_12B;             /* 12-bit resolution for converted data */

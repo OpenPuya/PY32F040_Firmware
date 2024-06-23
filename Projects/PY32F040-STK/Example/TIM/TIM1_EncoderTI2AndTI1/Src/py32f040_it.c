@@ -92,12 +92,4 @@ void SysTick_Handler(void)
 /* please refer to the startup file.                                          */
 /******************************************************************************/
 
-/**
-  * @brief This function handles TIM1 Interrupt .
-  */
-void TIM1_BRK_UP_TRG_COM_IRQHandler(void)
-{
-  HAL_TIM_IRQHandler(&TimHandle);
-}
-
 /************************ (C) COPYRIGHT Puya *****END OF FILE******************/

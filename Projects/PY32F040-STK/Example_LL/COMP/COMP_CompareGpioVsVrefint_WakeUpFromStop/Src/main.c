@@ -102,10 +102,7 @@ static void APP_CompConfig(void)
   
   /* Configure PA0 pin in analog mode */
   LL_GPIO_SetPinMode(GPIOA,LL_GPIO_PIN_0,LL_GPIO_MODE_ANALOG);
-  
-  /*Set PA0 as dropdown*/
-  LL_GPIO_SetPinPull(GPIOA,LL_GPIO_PIN_0,LL_GPIO_PULL_DOWN);
-  
+   
   /* Enable ADC clock*/
   LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_ADC1);
   
@@ -127,8 +124,8 @@ static void APP_CompConfig(void)
   /* Set comparator 1 output not to reverse */
   LL_COMP_SetOutputPolarity(COMP1,LL_COMP_OUTPUTPOL_NONINVERTED);
   
-  /* Power consumption mode fast */
-  LL_COMP_SetPowerMode(COMP1, LL_COMP_POWERMODE_HIGHSPEED);
+  /* Power consumption mode medium */
+  LL_COMP_SetPowerMode(COMP1, LL_COMP_POWERMODE_MEDIUMSPEED);
  
   /* Window mode not enabled */
   LL_COMP_SetCommonWindowMode(__LL_COMP_COMMON_INSTANCE(COMP1), LL_COMP_WINDOWMODE_DISABLE);

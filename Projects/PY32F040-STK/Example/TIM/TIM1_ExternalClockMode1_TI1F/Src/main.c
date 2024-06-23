@@ -33,8 +33,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-TIM_HandleTypeDef    TimHandle;
-TIM_ClockConfigTypeDef sClockSourceConfig;
+TIM_HandleTypeDef       TimHandle;
+TIM_ClockConfigTypeDef  sClockSourceConfig;
 
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -69,7 +69,7 @@ int main(void)
   }
 
   sClockSourceConfig.ClockFilter = 0;                                  /* No filter */
-  sClockSourceConfig.ClockPolarity = TIM_CLOCKPOLARITY_NONINVERTED;    /* ETR is non-inverted, active at high level or rising edge */
+  sClockSourceConfig.ClockPolarity = TIM_INPUTCHANNELPOLARITY_BOTHEDGE;    /* Trigger on both edge */
   sClockSourceConfig.ClockPrescaler = TIM_ETRPRESCALER_DIV1;           /* No prescaler is used */
   sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_TI1ED;              /* External clock source mode 1 (TTI1FP1 + edge detect.) */
   HAL_TIM_ConfigClockSource(&TimHandle, &sClockSourceConfig);          /* Configure clock source */
@@ -115,7 +115,7 @@ static void APP_SystemClockConfig(void)
   /* RCC_OscInitStruct.HSEFreq = RCC_HSE_16_32MHz; */                                  /* HSE clock range 16~32MHz */
   RCC_OscInitStruct.LSIState = RCC_LSI_OFF;                                            /* LSI OFF */
   RCC_OscInitStruct.LSEState = RCC_LSE_OFF;                                            /* LSE OFF */
-  /* RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_MEDIUM; */                             /* Use default LSE driver factor */
+  /* RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_MEDIUM; */                             /* LSE medium drive capability */
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_OFF;                                        /* PLL OFF */
   /* RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_NONE;*/
   /* RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL2;*/

@@ -73,7 +73,7 @@ int main(void)
 
   while (1)
   {
-    /* GPIO翻转输出约12MHz */
+    /* GPIO pin toggles at about 12MHz */
     APP_GpioToggle();
     APP_GpioToggle();
     APP_GpioToggle();

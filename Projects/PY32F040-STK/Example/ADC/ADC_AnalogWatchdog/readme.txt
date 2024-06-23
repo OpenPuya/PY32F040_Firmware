@@ -30,10 +30,10 @@ GCC Version: GNU Arm Embedded Toolchain 10.3-2021.10
 
 Example execution steps:
 1. Compile and download the program to MCU and run it;
-2. If the voltage value of PA7 is less than 1.65V (with a power supply voltage of
+2. If the voltage value of PA4 is less than 1.65V (with a power supply voltage of
 3.3V), it will not enter the watchdog interrupt and the LED light will not light 
 up;
-3. If the voltage value of PA7 is greater than 1.65V (with a supply voltage of 
+3. If the voltage value of PA4 is greater than 1.65V (with a supply voltage of 
 3.3V), the watchdog will interrupt and the LED will light up.
 ================================================================================
 注意事项：

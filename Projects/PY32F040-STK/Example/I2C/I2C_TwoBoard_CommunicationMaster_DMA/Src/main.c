@@ -32,7 +32,7 @@
 #include "main.h"
 
 /* Private define ------------------------------------------------------------*/
-#define DARA_LENGTH      15                 /* Length of data */
+#define DATA_LENGTH      15                 /* Length of data */
 #define I2C_ADDRESS      0xA0               /* Own address 0xA0 */
 #define I2C_SPEEDCLOCK   100000             /* Communication speed : 100K */
 #define I2C_DUTYCYCLE    I2C_DUTYCYCLE_16_9 /* Duty cycle */
@@ -89,7 +89,7 @@ int main(void)
   }
   
   /* Transmit data in master mode with DMA */
-  while (HAL_I2C_Master_Transmit_DMA(&I2cHandle, I2C_ADDRESS, (uint8_t *)aTxBuffer, DARA_LENGTH) != HAL_OK)
+  while (HAL_I2C_Master_Transmit_DMA(&I2cHandle, I2C_ADDRESS, (uint8_t *)aTxBuffer, DATA_LENGTH) != HAL_OK)
   {
     APP_ErrorHandler();
   }
@@ -98,7 +98,7 @@ int main(void)
   {
   }
   /* Receive data in master mode with DMA */
-  while (HAL_I2C_Master_Receive_DMA(&I2cHandle, I2C_ADDRESS, (uint8_t *)aRxBuffer, DARA_LENGTH) != HAL_OK)
+  while (HAL_I2C_Master_Receive_DMA(&I2cHandle, I2C_ADDRESS, (uint8_t *)aRxBuffer, DATA_LENGTH) != HAL_OK)
   {
     APP_ErrorHandler();
   }
@@ -123,7 +123,7 @@ int main(void)
 static void APP_CheckEndOfTransfer(void)
 {
   /* Compare the transmitted data with the received data */
-  if(APP_Buffercmp8((uint8_t*)aTxBuffer, (uint8_t*)aRxBuffer, DARA_LENGTH))
+  if(APP_Buffercmp8((uint8_t*)aTxBuffer, (uint8_t*)aRxBuffer, DATA_LENGTH))
   {
     /* Error handling */
     APP_LedBlinking();

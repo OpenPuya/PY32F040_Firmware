@@ -12,7 +12,7 @@ This example demonstrates how a hardware divider calculates signed division.
 测试用板：PY32F040_STK
 MDK版本： 5.28
 IAR版本： 9.20
-GCC 版本：GNU Arm Embedded Toolchain 10.3-2021.10
+GCC版本：GNU Arm Embedded Toolchain 10.3-2021.10
 
 Test environment:
 Test board: PY32F040_STK
@@ -21,15 +21,25 @@ IAR Version: 9.20
 GCC Version: GNU Arm Embedded Toolchain 10.3-2021.10
 ================================================================================
 使用步骤：
-1. 编译并下载程序；
-2. 串口打印计算结果；
+1. 编译下载程序到MCU，并运行；
+2. 串口打印计算结果，商为0xFFFCF35E，余数为0xFFFFF11F。
 
 Example execution steps:
-1.Compile and download the program;
-2.Serial port printing calculation results。
+1.Compile and download the program to MCU and run it;
+2.The serial port prints the calculation result, with a quotient of 0xFFFCF35E 
+and a remainder of 0xFFFFF11F.
 ================================================================================
 注意事项：
+1.  STK板        USB转TTL模块
+     PA02(TX) --> RX
+     PA03(RX) --> TX
+     GND      --> GND
+     波特率:115200
 
 Notes:
-
+1.  STK board    USB to TTL module
+     PA02(TX) --> RX
+     PA03(RX) --> TX
+     GND      --> GND
+     Baud rate: 115200
 ================================================================================

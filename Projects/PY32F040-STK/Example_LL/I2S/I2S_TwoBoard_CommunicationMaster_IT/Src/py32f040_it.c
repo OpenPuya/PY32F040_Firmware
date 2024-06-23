@@ -95,6 +95,6 @@ void SysTick_Handler(void)
   */
 void SPI2_IRQHandler()
 {
-   APP_I2sIRQCallback();
+  APP_I2sIRQCallback();
 }
 /************************ (C) COPYRIGHT Puya *****END OF FILE******************/

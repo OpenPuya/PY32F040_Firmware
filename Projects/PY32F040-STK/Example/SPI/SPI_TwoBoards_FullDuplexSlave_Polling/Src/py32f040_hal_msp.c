@@ -53,7 +53,7 @@ void HAL_MspInit(void)
   */
 void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
 {
-  GPIO_InitTypeDef  GPIO_InitStruct;
+  GPIO_InitTypeDef  GPIO_InitStruct = {0};
   /* Initialize SPI1 */
   if (hspi->Instance == SPI1)
   {
@@ -62,10 +62,10 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
     __HAL_RCC_SPI1_CLK_ENABLE();                    /* Enable SPI1 clock */
     
     /*
-      PB3-SCK  (AF3)
-      PB4-MISO(AF3)
-      PB5-MOSI(AF3)
-      PA15-NSS(AF3)
+      PB3-SCK (AF0)
+      PB4-MISO(AF0)
+      PB5-MOSI(AF0)
+      PA15-NSS(AF0)
     */
     /*SCK*/
     GPIO_InitStruct.Pin       = GPIO_PIN_3;

@@ -43,12 +43,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
-#define LEDx_PIN                           GPIO_PIN_0
-#define LEDx_GPIO_PORT                     GPIOA
-#define EXTIx_LINE                   EXTI_LINE_0
-#define EXTIx_IRQn                   EXTI4_15_IRQn
-#define EXTIx_IRQHANDLER             EXTI4_15_IRQHandler
-
 /* Exported variables prototypes ---------------------------------------------*/
 /* Exported functions prototypes ---------------------------------------------*/
 void APP_ErrorHandler(void);

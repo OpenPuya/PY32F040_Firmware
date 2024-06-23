@@ -723,6 +723,18 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
   */
 #define __HAL_UART_DISABLE(__HANDLE__)              ((__HANDLE__)->Instance->CR1 &=  ~USART_CR1_UE)
 
+/** @brief  Enable UART RE
+  * @param  __HANDLE__ specifies the UART Handle.
+  * @retval None
+  */
+#define __HAL_UART_ENABLE_DIRECTIONRX(__HANDLE__)            ((__HANDLE__)->Instance->CR1 |=  USART_CR1_RE)
+
+/** @brief  Disable UART RE
+  * @param  __HANDLE__ specifies the UART Handle.
+  * @retval None
+  */
+#define __HAL_UART_DISABLE_DIRECTIONRX(__HANDLE__)            ((__HANDLE__)->Instance->CR1 &=  ~USART_CR1_RE)
+
 /** @brief  Send Auto-Baud Rate Request.
   * @param  __HANDLE__ specifies the UART Handle.
   * @retval None

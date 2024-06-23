@@ -42,7 +42,6 @@
 UART_HandleTypeDef UartHandle;
 uint8_t aTxBuffer[] = "Auto BaudRate Test";
 uint8_t aRxBuffer[RXBUFFERSIZE];
-uint8_t submitsum = 0;
 
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -86,7 +85,7 @@ int main(void)
   * @param  None
   * @retval None
   */
-void APP_UsartConfig(void)
+static void APP_UsartConfig(void)
 {
   /* Initialize USART2 */
   UartHandle.Instance          = USART2;
@@ -96,6 +95,7 @@ void APP_UsartConfig(void)
   UartHandle.Init.Parity       = UART_PARITY_NONE;
   UartHandle.Init.HwFlowCtl    = UART_HWCONTROL_NONE;
   UartHandle.Init.Mode         = UART_MODE_TX_RX;
+  UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
 
   UartHandle.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_AUTOBAUDRATE_INIT;
   UartHandle.AdvancedInit.AutoBaudRateEnable = UART_ADVFEATURE_AUTOBAUDRATE_ENABLE; /* RX Auto Baud rate detection disable */
@@ -104,10 +104,6 @@ void APP_UsartConfig(void)
 #else
   UartHandle.AdvancedInit.AutoBaudRateMode = UART_ADVFEATURE_AUTOBAUDRATE_ONFALLINGEDGE; /* Auto Baud rate detection on falling edge.The upper computer sends 0x55 */
 #endif
-  if (HAL_UART_DeInit(&UartHandle) != HAL_OK)
-  {
-    APP_ErrorHandler();
-  }
   if (HAL_UART_Init(&UartHandle) != HAL_OK)
   {
     APP_ErrorHandler();

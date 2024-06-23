@@ -51,7 +51,8 @@ void HAL_MspInit(void)
   */
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
 {
-  GPIO_InitTypeDef   GPIO_InitStruct;
+  GPIO_InitTypeDef   GPIO_InitStruct = {0};
+
   /* Enable TIM1 clock */
   __HAL_RCC_TIM1_CLK_ENABLE();
   /* Enable GPIOA/GPIOB clock */
@@ -63,30 +64,35 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   /* TIM1_CH1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8;
   GPIO_InitStruct.Alternate = GPIO_AF2_TIM1;
+  GPIO_InitStruct.Pin = GPIO_PIN_8;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /* TIM1_CH1N */
   GPIO_InitStruct.Pin = GPIO_PIN_7;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /* TIM1_CH2 */
   GPIO_InitStruct.Pin = GPIO_PIN_9;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-  /* TIM1_CH2N */
-  GPIO_InitStruct.Pin = GPIO_PIN_0;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
   /* TIM1_CH3 */
   GPIO_InitStruct.Pin = GPIO_PIN_10;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-  /* TIM1_CH3N */
-  GPIO_InitStruct.Pin = GPIO_PIN_1;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-  /* TIM1_CH4 */
-  GPIO_InitStruct.Pin = GPIO_PIN_11;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /* TIM1_BKIN */
   GPIO_InitStruct.Pin = GPIO_PIN_6;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /* TIM1_CH2N */
+  GPIO_InitStruct.Alternate = GPIO_AF11_TIM1;
+  GPIO_InitStruct.Pin = GPIO_PIN_4;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+ 
+  /* TIM1_CH3N */
+  GPIO_InitStruct.Alternate = GPIO_AF11_TIM1;
+  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* Enable TIM1 Break, Update, Trigger and Commutation Interrupts */
   HAL_NVIC_SetPriority(TIM1_BRK_UP_TRG_COM_IRQn, 3, 0);

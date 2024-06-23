@@ -25,13 +25,13 @@ IAR Version: 9.20
 GCC Version: GNU Arm Embedded Toolchain 10.3-2021.10
 ================================================================================
 使用步骤：
-1. 编译并下载程序到MCU，并运行。LED灯亮。
+1. 编译并下载程序到MCU，并运行。
 2. 将PB07引脚输入0V时，进入PVD中断，LED灯亮。将PB07引脚悬空时（内部上拉相当于
    接入3.3V），LED灯灭。
 3. 再次将PB07引脚输入0V，LED灯亮。
 
 Example execution steps:
-1. Compile and download the program to the MCU and run it. The LED light turns on.
+1. Compile and download the program to the MCU and run it.
 2. When the voltage at PB07 pin is 0V, it triggers the PVD interrupt and the 
    LED light turns on. When the PB07 pin is left floating (internally pulled up 
    to 3.3V), the LED light turns off.

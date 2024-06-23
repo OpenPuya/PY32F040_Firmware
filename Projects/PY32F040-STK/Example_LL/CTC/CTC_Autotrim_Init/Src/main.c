@@ -150,7 +150,7 @@ static void APP_SystemClockConfig(void)
   */
 static void APP_MCOConfig(void)
 {
-  LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   
   /* GPIOA clock enable */
   LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOA);
@@ -175,7 +175,7 @@ static void APP_MCOConfig(void)
   */
 static void APP_CTCConfig(void)
 {
-  LL_CTC_InitTypeDef CTC_InitStruct;
+  LL_CTC_InitTypeDef CTC_InitStruct = {0};
   
   /* Enable CTC clock */
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_CTC);

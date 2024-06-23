@@ -144,7 +144,7 @@ static void APP_SystemClockConfig(void)
   */
 static void APP_ConfigRtc(void)
 {
-  LL_RTC_InitTypeDef rtc_initstruct;
+  LL_RTC_InitTypeDef rtc_initstruct = {0};
   
   /*##-1- Enable PWR clock and enable access to the backup domain #######*/
   /* To change the source clock of the RTC functionalities (LSE, LSI), you have to:
@@ -192,7 +192,7 @@ static void APP_ConfigRtc(void)
   }
   
   
-  LL_RTC_TimeTypeDef  rtc_time_initstruct;
+  LL_RTC_TimeTypeDef  rtc_time_initstruct = {0};
   /*## Configure Date ##################################################*/
   /* Set date: 2022.08.16 */
   APP_ConfigRtcDate(16, 8, 22);
@@ -243,13 +243,19 @@ static void APP_EnterStop(void)
 {
   /* Enable PWR clock */
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-
-  /* Clear SLEEPDEEP bit */
+  
+  /* Enable Low Power Run mode */
+  LL_PWR_EnableLowPowerRunMode();
+  
+  /* Enter DeepSleep mode */
   LL_LPM_EnableDeepSleep();
   
   /* Request Wait For Interrupt */
   __WFI();
+    
+  LL_LPM_EnableSleep();
 }
+
 /**
   * @brief  This function is executed in case of error occurrence.
   * @param  None

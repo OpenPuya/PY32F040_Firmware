@@ -1586,7 +1586,7 @@ mode.
 
 #define IS_TIM_ENCODERINPUT_POLARITY(__POLARITY__)   (((__POLARITY__) == TIM_ENCODERINPUTPOLARITY_RISING)   || \
                                                       ((__POLARITY__) == TIM_ENCODERINPUTPOLARITY_FALLING)  || \
-                                                       (__POLARITY__) == TIM_ENCODERINPUTPOLARITY_BOTHEDGE)
+                                                      ((__POLARITY__) == TIM_ENCODERINPUTPOLARITY_BOTHEDGE))
 
 #define IS_TIM_IC_POLARITY(__POLARITY__)   (((__POLARITY__) == TIM_ICPOLARITY_RISING)   || \
                                             ((__POLARITY__) == TIM_ICPOLARITY_FALLING)  || \

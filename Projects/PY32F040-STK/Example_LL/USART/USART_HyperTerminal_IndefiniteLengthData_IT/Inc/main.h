@@ -61,9 +61,9 @@ extern "C" {
 /* Exported variables prototypes ---------------------------------------------*/
 extern uint8_t RxBuf[RX_MAX_LEN];
 extern uint32_t RxLen;
-extern uint32_t CheckFlag;
-extern uint32_t CheckLen;
-extern uint32_t timeout;
+extern __IO uint32_t CheckFlag;
+extern __IO uint32_t CheckLen;
+extern __IO uint32_t timeout;
 /* Exported functions prototypes ---------------------------------------------*/
 void APP_ErrorHandler(void);
 void APP_UsartIRQCallback(USART_TypeDef *USARTx);

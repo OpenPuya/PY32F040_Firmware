@@ -172,7 +172,7 @@ static void APP_ConfigI2cMaster(void)
   LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_I2C1);
   
   /* I2C initialization */
-  LL_I2C_InitTypeDef I2C_InitStruct;
+  LL_I2C_InitTypeDef I2C_InitStruct = {0};
   I2C_InitStruct.PeripheralMode  = LL_I2C_MODE_I2C;
   I2C_InitStruct.ClockSpeed      = I2C_SPEEDCLOCK;
   I2C_InitStruct.DutyCycle       = LL_I2C_DUTYCYCLE_16_9;

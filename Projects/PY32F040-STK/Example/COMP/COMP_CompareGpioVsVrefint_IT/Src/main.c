@@ -57,6 +57,7 @@ int main(void)
   hcomp1.Init.Hysteresis      = COMP_HYSTERESIS_DISABLE;                /* Hysteresis function off */
   hcomp1.Init.WindowMode      = COMP_WINDOWMODE_DISABLE;                /* Window Mode Off */
   hcomp1.Init.TriggerMode     = COMP_TRIGGERMODE_IT_RISING_FALLING;     /* COMP1 rising/falling edge triggering */
+  hcomp1.Init.DigitalFilter   = 0;                                      /* Disable DigitalFilter */
   hcomp1.Init.VrefDiv         = COMP_VREF_DIV_32_64VREF;                /* Vrefcmp 32/64 */
   hcomp1.Init.VrefSrc         = COMP_VREF_SRC_VCCA;                     /* Vref select VCCA */  
   

@@ -4,13 +4,13 @@
 ================================================================================
 功能描述：
 此样例演示了CRC校验功能，通过对一个数组里的数据进行校验，得到的校验值与理论校验
-值进行比较，相等则LED灯亮，否则LED灯熄灭。
+值进行比较，相等则LED灯亮，否则LED灯闪烁。
 
 Function descriptions:
 This example demonstrates the CRC verification function. By verifying the data
 in an array, the obtained verification value is compared with the theoretical
 verification value. If it is equal, the LED light will be on, otherwise the LED
-light will be off.
+blink.
 ================================================================================
 测试环境：
 测试用板：PY32F040_STK

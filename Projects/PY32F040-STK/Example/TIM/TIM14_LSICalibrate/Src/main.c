@@ -144,7 +144,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
   */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  uint32_t Temp_delta;
+  uint32_t Temp_delta = 0;
   /* Count the number of times a capture occurs between update interrupts */
   Temp_delta = Capture_cnt - Capture_last_cnt;
   
@@ -193,7 +193,7 @@ static void APP_SystemClockConfig(void)
   RCC_OscInitStruct.HSEFreq = RCC_HSE_16_32MHz;                                                 /* HSE crystal frequency range 16M~32M */
   RCC_OscInitStruct.LSIState = RCC_LSI_ON;                                                      /* Enable LSI */
   RCC_OscInitStruct.LSEState = RCC_LSE_OFF;                                                     /* Disable LSE */
-  RCC_OscInitStruct.LSEDriver = RCC_ECSCR_LSE_DRIVER_1;                                         /* Default LSE  drive capability */
+  RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_MEDIUM;                                            /* LSE medium drive capability */
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;                                                  /* Enable PLL */
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;                                          /* Set HSI as PLL entry clock */
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL2;                                                  /* SYSCLK = HSISYS*2 */

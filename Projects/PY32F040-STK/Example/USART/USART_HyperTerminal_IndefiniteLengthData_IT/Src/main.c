@@ -35,12 +35,12 @@
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef UartHandle;
 uint8_t RxBuf[RX_MAX_LEN] = {0}; /* Receive buffer */
-uint32_t RxLen = 0;     /* Single frame data, actual received data length */
-uint32_t CheckFlag = 0; /* After the hardware detects an idle frame, the
-                           "End of single frame data reception" check flag */
-uint32_t CheckLen = 0;  /* Used to determine whether new data has arrived within
-                           the timeout period */
-uint32_t TickStart = 0; /* Used for timeout judgment */
+uint32_t RxLen = 0;          /* Single frame data, actual received data length */
+__IO uint32_t CheckFlag = 0; /* After the hardware detects an idle frame, the
+                                "End of single frame data reception" check flag */
+__IO uint32_t CheckLen = 0;  /* Used to determine whether new data has arrived within
+                                the timeout period */
+__IO uint32_t TickStart = 0; /* Used for timeout judgment */
 
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -64,6 +64,8 @@ int main(void)
   UartHandle.Init.Parity       = UART_PARITY_NONE;
   UartHandle.Init.HwFlowCtl    = UART_HWCONTROL_NONE;
   UartHandle.Init.Mode         = UART_MODE_TX_RX;
+  UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
+  UartHandle.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
   HAL_UART_Init(&UartHandle);
   
   /* Enable idle frame interrupt */

@@ -45,7 +45,7 @@ static void APP_GPIOConfig(void);
   */
 int main(void)
 {
-  /* Clock initialization, configure the system clock as LSI */
+  /* Clock initialization, configure the system clock as PLL */
   APP_SystemClockConfig();
  
   /* Initialize GPIO for output */
@@ -94,7 +94,7 @@ static void APP_SystemClockConfig(void)
   /* Configure AHB prescaler */
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 
-  /* Configure HSISYS as system clock and initialize */
+  /* Configure PLL as system clock and initialize */
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
   while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
   {
@@ -102,6 +102,7 @@ static void APP_SystemClockConfig(void)
 
   /* Configure APB1 prescaler and initialize */
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
+  LL_Init1msTick(32000000);
   
   /* Update system clock global variable SystemCoreClock (can also be updated by calling SystemCoreClockUpdate function) */
   LL_SetSystemCoreClock(32000000);
@@ -114,7 +115,7 @@ static void APP_SystemClockConfig(void)
   */
 static void APP_GPIOConfig(void)
 {
-  LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   
   /* Enable GPIOA clock */
   LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOA);

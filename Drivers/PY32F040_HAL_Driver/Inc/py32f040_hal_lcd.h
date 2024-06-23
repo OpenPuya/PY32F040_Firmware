@@ -112,10 +112,10 @@ typedef struct
         struct
         {
             uint32_t Seg32_35     :4;
-            uint32_t Seg36Com7    :1;
-            uint32_t Seg37Com6    :1;
-            uint32_t Seg38Com5    :1;
             uint32_t Seg39Com4    :1;
+            uint32_t Seg38Com5    :1;
+            uint32_t Seg37Com6    :1;
+            uint32_t Seg36Com7    :1;
             uint32_t Com0_3       :4;
             uint32_t Mux          :1;
         }SegComBit;

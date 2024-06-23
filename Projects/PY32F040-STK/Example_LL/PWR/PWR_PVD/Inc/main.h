@@ -57,7 +57,7 @@ extern "C" {
 /* Exported variables prototypes ---------------------------------------------*/
 /* Exported functions prototypes ---------------------------------------------*/
 void APP_ErrorHandler(void);
-void PvdCallback(void);
+void APP_PvdCallback(void);
 
 #ifdef __cplusplus
 }

@@ -29,7 +29,7 @@ GCC Version: GNU Arm Embedded Toolchain 10.3-2021.10
 ================================================================================
 使用步骤:
 1.选择两块PY32F040_STK板，一块作为主机，一块作为从机
-2.编译下载主机程序（本样例程序）
+2.编译下载主机程序SPI_TwoBoards_FullDuplexMaster_IT_Init
 3.编译下载从机程序SPI_TwoBoards_FullDuplexSlave_IT_Init
 4.主机与从机引脚连接(箭头指向为信号传输方向) 
 主机MASTER：         从机SLAVE：
@@ -43,7 +43,7 @@ GND       <----->   GND
 
 Example execution steps:
 1. Select two PY32F040_STK boards, one as the host and the other as the slave
-2. Compile and download the host program (this sample program)
+2. Compile and download the host program SPI_TwoBoards_FullDuplexMaster_IT_Init
 3. Compile and download slave program: SPI_TwoBoards_FullDuplexSlave_IT_Init
 4. The host is connected to the SLAVE pin (the arrow points in the signal 
 transmission direction).

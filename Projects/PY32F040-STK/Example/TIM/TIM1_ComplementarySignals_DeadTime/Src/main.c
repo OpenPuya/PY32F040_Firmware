@@ -89,6 +89,7 @@ int main(void)
   sBreakConfig.LockLevel        = TIM_LOCKLEVEL_OFF;                     /* LOCK off */
   sBreakConfig.BreakPolarity    = TIM_BREAKPOLARITY_LOW;                 /* Break input BRK is active LOW */
   sBreakConfig.AutomaticOutput  = TIM_AUTOMATICOUTPUT_ENABLE;            /* Automatic output enable */
+  sBreakConfig.BreakFilter      = 0;
   /* Configures the Break feature, dead time */
   if (HAL_TIMEx_ConfigBreakDeadTime(&TimHandle, &sBreakConfig) != HAL_OK)
   {

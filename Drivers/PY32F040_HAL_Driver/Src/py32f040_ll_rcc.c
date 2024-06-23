@@ -580,9 +580,11 @@ uint32_t RCC_GetSystemClockFreq(void)
 #endif
   case LL_RCC_SYS_CLKSOURCE_STATUS_LSI:
     frequency = LSI_VALUE;
+    break;
 #if defined(RCC_LSE_SUPPORT)
   case LL_RCC_SYS_CLKSOURCE_STATUS_LSE:
     frequency = LSE_VALUE;
+    break;
 #endif
   case LL_RCC_SYS_CLKSOURCE_STATUS_HSISYS:  /* HSISYS used as system clock  source */
   default:

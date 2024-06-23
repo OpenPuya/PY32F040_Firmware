@@ -27,11 +27,11 @@ GCC Version: GNU Arm Embedded Toolchain 10.3-2021.10
 ================================================================================
 使用步骤：
 1. 编译下载程序到MCU，并运行
-2. 保持任意两个引脚电平不变，当剩下一引脚电平变化时LED翻转
+2. PA8/PA9/PA10保持任意两个引脚电平不变，当剩下一引脚电平变化时LED翻转
 
 Example execution steps:
 1.Compile and download the program to the MCU, and then run it.
-2.Keep the level of any two pins unchanged, and when the level of the 
+2.Keep the level of any two pins(PA8/PA9/PA10) unchanged, and when the level of the 
 remaining pin changes, the LED will toggle.
 ================================================================================
 注意事项：

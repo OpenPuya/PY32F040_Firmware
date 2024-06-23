@@ -33,9 +33,14 @@
 #include "py32f040xx_ll_Start_Kit.h"
 
 /* Private define ------------------------------------------------------------*/
+#define COUNTOF(__BUFFER__)   (sizeof(__BUFFER__) / sizeof(*(__BUFFER__)))
+#define TXSTARTMESSAGESIZE    (COUNTOF(aTxStartMessage) - 1)
+#define TXENDMESSAGESIZE      (COUNTOF(aTxEndMessage) - 1)
+
 /* Private variables ---------------------------------------------------------*/
-uint8_t aTxBuffer[] = "UART Test";
-uint8_t aRxBuffer[30];
+uint8_t aRxBuffer[12] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+uint8_t aTxStartMessage[] = "\n\r USART Hyperterminal communication based on IT \n\r Enter 12 characters using keyboard :\n\r";
+uint8_t aTxEndMessage[] = "\n\r Example Finished\n\r";
 
 uint8_t *TxBuff = NULL;
 __IO uint16_t TxSize = 0;
@@ -45,7 +50,8 @@ uint8_t *RxBuff = NULL;
 __IO uint16_t RxSize = 0;
 __IO uint16_t RxCount = 0;
 
-__IO ITStatus UartReady = RESET;
+__IO ITStatus UsartReady = RESET;
+__IO ITStatus UsartError = RESET;
 
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -54,6 +60,7 @@ static void APP_SystemClockConfig(void);
 static void APP_ConfigUsart(void);
 static void APP_UsartTransmit_IT(USART_TypeDef *USARTx, uint8_t *pData, uint16_t Size);
 static void APP_UsartReceive_IT(USART_TypeDef *USARTx, uint8_t *pData, uint16_t Size);
+static void APP_WaitToReady(void);
 
 /**
   * @brief  Main program
@@ -65,31 +72,35 @@ int main(void)
   /* Configure Systemclock */
   APP_SystemClockConfig(); 
 
+  /* Configure LED */
+  BSP_LED_Init(LED_GREEN);
+  
   /* Configure USART2 */
   APP_ConfigUsart();
   
-  /* Send string:"UART Test"，and wait send complete */
-  APP_UsartTransmit_IT(USART2, (uint8_t*)aTxBuffer, sizeof(aTxBuffer)-1);
-  while (UartReady != SET)
-  {
-  }
-  UartReady = RESET;
+  /* Start the transmission process */
+  APP_UsartTransmit_IT(USART2, (uint8_t*)aTxStartMessage, TXSTARTMESSAGESIZE);
+  APP_WaitToReady();
 
+  /* Put USART peripheral in reception process */
+  APP_UsartReceive_IT(USART2, (uint8_t *)aRxBuffer, 12);
+  APP_WaitToReady();
+
+  /* Send the received Buffer */
+  APP_UsartTransmit_IT(USART2, (uint8_t*)aRxBuffer, 12);
+  APP_WaitToReady();
+    
+  /* Send the End Message */
+  APP_UsartTransmit_IT(USART2, (uint8_t*)aTxEndMessage, TXENDMESSAGESIZE);
+  APP_WaitToReady();
+
+  /* Turn on LED if test passes then enter infinite loop */
+  BSP_LED_On(LED_GREEN);
+  
+  /* Infinite loop */
   while (1)
   {
-    /* Receive data */
-    APP_UsartReceive_IT(USART2, (uint8_t *)aRxBuffer, 12);
-    while (UartReady != SET)
-    {
-    }
-    UartReady = RESET;
-    
-    /* Send data */
-    APP_UsartTransmit_IT(USART2, (uint8_t*)aRxBuffer, 12);
-    while (UartReady != SET)
-    {
-    }
-    UartReady = RESET;
+
   }
 }
 
@@ -124,6 +135,23 @@ static void APP_SystemClockConfig(void)
 }
 
 /**
+  * @brief  Wait transfer complete
+  * @param  None
+  * @retval None
+  */
+static void APP_WaitToReady(void)
+{
+  while (UsartReady != SET);
+  
+  UsartReady = RESET;
+
+  if(UsartError == SET)
+  {
+    APP_ErrorHandler();
+  }
+}
+
+/**
   * @brief  USART2 configuration function
   * @param  None
   * @retval None
@@ -136,7 +164,7 @@ static void APP_ConfigUsart(void)
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART2);
   
   /* GPIOA configuration */
-  LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* Select pin 2 */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_2;
   /* Select alternate function mode */
@@ -165,7 +193,7 @@ static void APP_ConfigUsart(void)
   NVIC_EnableIRQ(USART2_IRQn);
   
   /* Set USART feature */
-  LL_USART_InitTypeDef USART_InitStruct;
+  LL_USART_InitTypeDef USART_InitStruct = {0};
   /* Set baud rate */
   USART_InitStruct.BaudRate = 9600;
   /* set word length to 8 bits: Start bit, 8 data bits, n stop bits */
@@ -225,6 +253,9 @@ static void APP_UsartReceive_IT(USART_TypeDef *USARTx, uint8_t *pData, uint16_t 
 
   /* Enable RX Not Empty Interrupt */
   LL_USART_EnableIT_RXNE(USARTx);
+  
+  /* Enable receive and begins searching for a start bit */
+  LL_USART_EnableDirectionRx(USARTx);
 }
 
 /**
@@ -247,9 +278,10 @@ void APP_UsartIRQCallback(USART_TypeDef *USARTx)
       {
         LL_USART_DisableIT_RXNE(USARTx);
         LL_USART_DisableIT_PE(USARTx);
-               LL_USART_DisableIT_ERROR(USARTx);
+        LL_USART_DisableIT_ERROR(USARTx);
+        LL_USART_DisableDirectionRx(USARTx);
         
-        UartReady = SET;
+        UsartReady = SET;
       }
       return;
     }
@@ -258,7 +290,8 @@ void APP_UsartIRQCallback(USART_TypeDef *USARTx)
   /* receive error */ 
   if (errorflags != RESET)
   {
-    APP_ErrorHandler();
+    UsartError = SET;
+    return;
   }
   
   /* Transmit data register is empty */ 
@@ -279,7 +312,7 @@ void APP_UsartIRQCallback(USART_TypeDef *USARTx)
   if ((LL_USART_IsActiveFlag_TC(USARTx) != RESET) && (LL_USART_IsEnabledIT_TC(USARTx) != RESET))
   {
     LL_USART_DisableIT_TC(USARTx);
-    UartReady = SET;
+    UsartReady = SET;
   
     return;
   }

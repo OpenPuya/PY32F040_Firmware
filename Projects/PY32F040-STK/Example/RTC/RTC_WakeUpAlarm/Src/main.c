@@ -35,14 +35,14 @@
 /* Private variables ---------------------------------------------------------*/
 RTC_HandleTypeDef RTCinit;
 RTC_TimeTypeDef RTCtime;
-uint8_t gsecond, gminute, ghour;
+RTC_AlarmTypeDef RTC_AlarmStruct;
 
 /* Private user code ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 static void APP_SystemClockConfig(void);
 static void APP_RtcInit(void);
-static void APP_RtcSetAlarm_IT(uint8_t Sec, uint8_t Min, uint8_t Hour);
+static void APP_RtcSetAlarm(void);
 
 /**
   * @brief  Main program.
@@ -53,7 +53,7 @@ int main(void)
   /* Reset of all peripherals, Initializes the Systick */
   HAL_Init();
   
-  /* Enable LSE clock */
+  /* Enable LSI clock */
   APP_SystemClockConfig();
   
   /* Initialize LED */
@@ -76,28 +76,33 @@ int main(void)
   {
   }
   
+  /* Get current RTC time in binary format */
+  HAL_RTC_GetTime(&RTCinit,&RTCtime,RTC_FORMAT_BIN);
+  
+  /* Configure the time of the first alarm in binary format */
+  RTC_AlarmStruct.AlarmTime = RTCtime;
+  RTC_AlarmStruct.AlarmTime.Seconds += 1;
+  HAL_RTC_SetAlarm_IT(&RTCinit, &RTC_AlarmStruct, RTC_FORMAT_BIN);
+  
    /* Turn off LED */
   BSP_LED_Off(LED_GREEN);
-  
-  /* Suspend SysTick interrupt */
-  HAL_SuspendTick();
-  
+
   while (1)
   {
-    /* Wait for synchronization */
-    HAL_RTC_WaitForSynchro(&RTCinit);
-    
-    /* Get current RTC time in binary format */
-    HAL_RTC_GetTime(&RTCinit, &RTCtime, RTC_FORMAT_BIN);
-    
-    /* Set RTC alarm interrupt */
-    ghour = RTCtime.Hours;
-    gminute = RTCtime.Minutes;
-    gsecond = RTCtime.Seconds;
-    APP_RtcSetAlarm_IT(gsecond, gminute, ghour);
+    /* Suspend SysTick interrupt */
+    HAL_SuspendTick();
     
     /* Enter STOP mode */
     HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+    
+    /* Resume SysTick interrupt */
+    HAL_ResumeTick();
+    
+    /* Wait for synchronization */
+    HAL_RTC_WaitForSynchro(&RTCinit);
+    
+    /* Set RTC alarm */
+    APP_RtcSetAlarm();
   }
 }
 
@@ -108,11 +113,25 @@ int main(void)
   */
 static void APP_RtcInit(void)
 {
-  RTC_TimeTypeDef Timeinit;
+  RTC_TimeTypeDef Timeinit = {0};
+  RCC_PeriphCLKInitTypeDef RTCLCKconfig = {0};
   
+  /* Enable access to the backup domain (RTC settings are stored in the backup domain) */
+  HAL_PWR_EnableBkUpAccess();
+  
+  /*Enable RTC clock*/
+  __HAL_RCC_RTCAPB_CLK_ENABLE();                        /* Enable RTC module APB clock */
+  __HAL_RCC_RTC_ENABLE();                               /* Enable RTC clock */
+  
+  /* RCC peripheral clock initialization */
+  RTCLCKconfig.PeriphClockSelection = RCC_PERIPHCLK_RTC;/* RCC peripheral clock selection as RTC */
+  RTCLCKconfig.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;/* RTC source selection as LSI */
+  HAL_RCCEx_PeriphCLKConfig(&RTCLCKconfig);
+
   /* RTC initialization */
   RTCinit.Instance = RTC;                               /* Select RTC */
   RTCinit.Init.AsynchPrediv = RTC_AUTO_1_SECOND;        /* Automatic calculation of RTC's 1-second time base */
+  RTCinit.Init.OutPut = RTC_OUTPUTSOURCE_NONE;          /* No output on the TAMPER pin */
   /*2022-1-1-00:00:00*/
   RTCinit.DateToUpdate.Year = 22;                       /* Year 22 */
   RTCinit.DateToUpdate.Month = RTC_MONTH_JANUARY;       /* January */
@@ -133,21 +152,18 @@ static void APP_RtcInit(void)
 }
 
 /**
-  * @brief  Set RTC alarm interrupt
-  * @param  Sec：seconds；
-  * @param  Min：minutes；
-  * @param  Hour：hours；
+  * @brief  Set RTC alarm
+  * @param  None
   * @retval None
   */
-static void APP_RtcSetAlarm_IT(uint8_t Sec, uint8_t Min, uint8_t Hour)
+static void APP_RtcSetAlarm(void)
 {
-  RTC_AlarmTypeDef Alarminit;
-  /*00:00:5*/
-  RTCinit.Instance = RTC;
-  Alarminit.AlarmTime.Hours = Hour;                           /* hours */
-  Alarminit.AlarmTime.Minutes = Min;                          /* minutes */
-  Alarminit.AlarmTime.Seconds = Sec + 1;                      /* seconds */
-  HAL_RTC_SetAlarm_IT(&RTCinit, &Alarminit, RTC_FORMAT_BIN);
+  /* Get current alarm time in binary format */
+  HAL_RTC_GetAlarm(&RTCinit, &RTC_AlarmStruct, RTC_FORMAT_BIN);
+  
+  /* Update alarm time in binary format */
+  RTC_AlarmStruct.AlarmTime.Seconds += 1;
+  HAL_RTC_SetAlarm_IT(&RTCinit, &RTC_AlarmStruct, RTC_FORMAT_BIN);
 }
 
 /**
@@ -157,8 +173,11 @@ static void APP_RtcSetAlarm_IT(uint8_t Sec, uint8_t Min, uint8_t Hour)
   */
 void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
 {
+  /* Toggle LED */
   BSP_LED_Toggle(LED_GREEN);
-  printf("%02d:%02d:%02d\r\n", ghour, gminute, gsecond);
+  
+  /* Print the current alarm time */
+  printf("%02d:%02d:%02d\r\n", RTC_AlarmStruct.AlarmTime.Hours , RTC_AlarmStruct.AlarmTime.Minutes, RTC_AlarmStruct.AlarmTime.Seconds);
 }
 
 /**
@@ -178,7 +197,7 @@ static void APP_SystemClockConfig(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_8MHz;  /* Configure HSI clock as 8MHz */
   RCC_OscInitStruct.HSEState = RCC_HSE_OFF;                         /* Disable HSE */
   /*RCC_OscInitStruct.HSEFreq = RCC_HSE_16_32MHz;*/
-  RCC_OscInitStruct.LSIState = RCC_LSI_OFF;                         /* Disable LSI */
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;                          /* Enable LSI */
   RCC_OscInitStruct.LSEState = RCC_LSE_OFF;                         /* Disable LSE */
   /*RCC_OscInitStruct.LSEDriver = RCC_LSEDRIVE_MEDIUM;*/
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_OFF;                     /* Disable PLL */

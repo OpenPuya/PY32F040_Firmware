@@ -32,7 +32,7 @@
 #include "main.h"
 
 /* Private define ------------------------------------------------------------*/
-#define DARA_LENGTH         15                 /* Length of data */
+#define DATA_LENGTH         15                 /* Length of data */
 #define I2C_ADDRESS         0xA0               /* Own address 0xA0 */
 #define I2C_ADDRESS_SECOND  0xA2               /* Own second address 0xA2 */
 #define I2C_SPEEDCLOCK   100000                /* Communication speed : 100K */
@@ -91,14 +91,14 @@ int main(void)
   }
 
   /* I2C master interrupt mode transmission */
-  while (HAL_I2C_Master_Transmit_IT(&I2cHandle, I2C_ADDRESS_SECOND, (uint8_t *)aTxBuffer, DARA_LENGTH) != HAL_OK)
+  while (HAL_I2C_Master_Transmit_IT(&I2cHandle, I2C_ADDRESS_SECOND, (uint8_t *)aTxBuffer, DATA_LENGTH) != HAL_OK)
   {
     APP_ErrorHandler();
   }
   /* Check the current I2C state */
   while (HAL_I2C_GetState(&I2cHandle) != HAL_I2C_STATE_READY);
   /* I2C master interrupt mode reception */
-  while (HAL_I2C_Master_Receive_IT(&I2cHandle, I2C_ADDRESS_SECOND, (uint8_t *)aRxBuffer, DARA_LENGTH) != HAL_OK)
+  while (HAL_I2C_Master_Receive_IT(&I2cHandle, I2C_ADDRESS_SECOND, (uint8_t *)aRxBuffer, DATA_LENGTH) != HAL_OK)
   {
     APP_ErrorHandler();
   }
@@ -121,7 +121,7 @@ int main(void)
 static void APP_CheckEndOfTransfer(void)
 {
   /* Compare the transmitted data with the received data */
-  if(APP_Buffercmp8((uint8_t*)aTxBuffer, (uint8_t*)aRxBuffer, DARA_LENGTH))
+  if(APP_Buffercmp8((uint8_t*)aTxBuffer, (uint8_t*)aRxBuffer, DATA_LENGTH))
   {
     /* Error handling */
     APP_LedBlinking();

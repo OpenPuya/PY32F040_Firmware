@@ -77,14 +77,14 @@ int main(void)
 static void APP_ConfigureEXTI(void)
 {
   /* Configure pin PB0 as input mode */
-  LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
   GPIO_InitStruct.Pin = LL_GPIO_PIN_0;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* Configure EXTI to trigger interrupts and falling edges */
-  LL_EXTI_InitTypeDef EXTI_InitStruct;
+  LL_EXTI_InitTypeDef EXTI_InitStruct = {0};
   EXTI_InitStruct.Line = LL_EXTI_LINE_0;
   EXTI_InitStruct.LineCommand = ENABLE;
   EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;

@@ -61,6 +61,7 @@ int main(void)
   /* RTC initialization */
   RtcHandle.Instance = RTC;                         /* Select RTC */
   RtcHandle.Init.AsynchPrediv = RTC_AUTO_1_SECOND;  /* RTC asynchronous prescaler calculated automatically for one second time base */
+  RtcHandle.Init.OutPut = RTC_OUTPUTSOURCE_NONE;    /* No output on the TAMPER pin */
   if (HAL_RTC_Init(&RtcHandle) != HAL_OK)
   {
   }

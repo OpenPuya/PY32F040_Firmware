@@ -52,7 +52,7 @@ int main(void)
   LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
   
-  /* Clock initialization, configure the system clock as LSI */
+  /* Configure the system clock */
   APP_SystemClockConfig();
 
   /* Initialize LED */
@@ -130,13 +130,7 @@ static void APP_ExtiConfig(void)
   EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_FALLING;
    
   /* Initialize external interrupt */
-  LL_EXTI_Init(&EXTI_InitStruct);
-   
-  /*  Set interrupt priority  */
-  NVIC_SetPriority(EXTI4_15_IRQn,1);
-   
-  /* Enable interrupt */
-  NVIC_EnableIRQ(EXTI4_15_IRQn);
+  LL_EXTI_Init(&EXTI_InitStruct);  
 }
 
 /**

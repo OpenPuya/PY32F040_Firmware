@@ -105,7 +105,7 @@ void USART2_IRQHandler(void)
     LL_USART_ClearFlag_IDLE(USART2);
     
     CheckFlag = 1;             /* Received an idle frame and enabled the check to
-                                  see if it is a single frame data receiving end� */
+                                  see if it is a single frame data receiving end */
     CheckLen = RxLen;          /* Obtain the length of received single frame data */
     timeout = RX_TIMEOUT;      /* Record the timeout time (for timeout judgment) */
     LL_SYSTICK_IsActiveCounterFlag(); /* Clear the COUNTFLAG first */

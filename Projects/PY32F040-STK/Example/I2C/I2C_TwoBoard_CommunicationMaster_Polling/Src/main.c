@@ -32,7 +32,7 @@
 #include "main.h"
 
 /* Private define ------------------------------------------------------------*/
-#define DARA_LENGTH      15                 /* Length of data */
+#define DATA_LENGTH      15                 /* Length of data */
 #define I2C_ADDRESS      0xA0               /* Own address 0xA0 */
 #define I2C_SPEEDCLOCK   100000             /* Communication speed : 100K */
 #define I2C_DUTYCYCLE    I2C_DUTYCYCLE_16_9 /* Duty cycle */
@@ -69,13 +69,13 @@ int main(void)
   BSP_PB_Init(BUTTON_KEY,BUTTON_MODE_GPIO);
   
   /* I2C initialization */
-  I2cHandle.Instance             = I2C1;                       /* I2C */
+  I2cHandle.Instance             = I2C1;                      /* I2C */
   I2cHandle.Init.ClockSpeed      = I2C_SPEEDCLOCK;            /* I2C communication speed */
   I2cHandle.Init.DutyCycle       = I2C_DUTYCYCLE;             /* I2C Duty cycle */
   I2cHandle.Init.OwnAddress1     = I2C_ADDRESS;               /* I2C address */
   I2cHandle.Init.AddressingMode  = I2C_ADDRESSINGMODE_7BIT;   /* 7-bit addressing mode */
   I2cHandle.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;   /* Disable dual address */
-  /* I2cHandle.Init.OwnAddress2     = I2C_ADDRESS; */              /* Second address */
+  /* I2cHandle.Init.OwnAddress2     = I2C_ADDRESS; */         /* Second address */
   I2cHandle.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;   /* Disable general call */
   I2cHandle.Init.NoStretchMode   = I2C_NOSTRETCH_DISABLE;     /* Enable clock stretching */
   if (HAL_I2C_Init(&I2cHandle) != HAL_OK)
@@ -88,15 +88,15 @@ int main(void)
   {
   }
 
-  /* Transmit data in master mode with DMA */
-  while (HAL_I2C_Master_Transmit(&I2cHandle, I2C_ADDRESS, (uint8_t *)aTxBuffer, DARA_LENGTH, 5000) != HAL_OK)
+  /* Transmit data in master mode */
+  while (HAL_I2C_Master_Transmit(&I2cHandle, I2C_ADDRESS, (uint8_t *)aTxBuffer, DATA_LENGTH, 5000) != HAL_OK)
   {
     APP_ErrorHandler();
   }
   /* Check the current I2C state */
   while (HAL_I2C_GetState(&I2cHandle) != HAL_I2C_STATE_READY);
-  /* Receive data in master mode with DMA */
-  while (HAL_I2C_Master_Receive(&I2cHandle, I2C_ADDRESS, (uint8_t *)aRxBuffer, DARA_LENGTH, 5000) != HAL_OK)
+  /* Receive data in master mode */
+  while (HAL_I2C_Master_Receive(&I2cHandle, I2C_ADDRESS, (uint8_t *)aRxBuffer, DATA_LENGTH, 5000) != HAL_OK)
   {
     APP_ErrorHandler();
   }
@@ -119,7 +119,7 @@ int main(void)
 static void APP_CheckEndOfTransfer(void)
 {
   /* Compare the transmitted data with the received data */
-  if(APP_Buffercmp8((uint8_t*)aTxBuffer, (uint8_t*)aRxBuffer, DARA_LENGTH))
+  if(APP_Buffercmp8((uint8_t*)aTxBuffer, (uint8_t*)aRxBuffer, DATA_LENGTH))
   {
     /* Error handling */
     APP_LedBlinking();
